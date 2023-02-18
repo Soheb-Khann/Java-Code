@@ -1,24 +1,26 @@
-public class ArrayList {
+package main.list;
+
+public class ResizableArray {
     int n;
     int i;
     int list[];
-    ArrayList(int size){
+   public ResizableArray(int size){
         n = size;
         list = new int[n] ;
         i = 0;
     }
 
-    ArrayList(){
+   public ResizableArray(){
         list = new int[50] ;
         i = 0;
     }
 
-    void Add(int e){
+    public void Add(int e){
         list[i] = e;
         i++;
     }
 
-    int Get(int index){
+    public int Get(int index){
       return list[index];
     }
 

@@ -23,18 +23,23 @@ public class ResizableArray {
     public int Get(int index){
         return list[index];
     }
-
-    public void Remove(){
+    public void Set(int index, int e) {
+     list[index] = e;
+    }
+    public int Remove(){
         --i;
         System.out.println("Removed : "+list[i]);
+        return list[i];
     }
 
-    public void Find(int f){
+    public int Find(int f){
         for (int j = 0; j < list.length; j++) {
             if(f == list[j]){
                 System.out.println("Element : "+f+"\n Found at index : "+j);
-                break;
+                return j;
             }
         }
+        System.out.println("Element Not Found");
+        return 0;
     }
 }

@@ -33,13 +33,33 @@ public class ResizableArray {
     }
 
     public int Find(int f){
-        for (int j = 0; j < list.length; j++) {
+        for (int j = 0; j < i ; j++) {
             if(f == list[j]){
-                System.out.println("Element : "+f+"\n Found at index : "+j);
+                System.out.println("Element : "+f+" \n Found at index : "+j);
                 return j;
             }
         }
         System.out.println("Element Not Found");
-        return 0;
+        return -1;
+    }
+
+    public int lastIndexOf(int e){
+        int lastIndex = -1;
+        for (int j = 0; j< i ; j++){
+            if (e == list[j]){
+                lastIndex = j;
+            }
+        }
+        return lastIndex ;
+    }
+
+    public int removeIndex(int n){
+        int e = list[n];
+        list[n] = 0;
+        for (int j = n; j < i-1; j++) {
+        list[j] = list[j+1];
+        }
+        --i;
+        return e;
     }
 }

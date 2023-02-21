@@ -35,4 +35,35 @@ public class ResizableArrayTest {
         list.Add(10);
         assertEquals(3,list.Find(17));
     }
+    @Test
+    public void testLastIndexOf(){
+        ResizableArray list = new ResizableArray();
+        list.Add(5);
+        list.Add(4);
+        list.Add(3);
+        list.Add(2);
+        list.Add(5);
+        list.Add(8);
+        list.Add(9);
+        list.Add(5);
+        list.Add(1);
+        assertEquals(7,list.lastIndexOf(5));
+    }
+    @Test
+    public void testRemoveIndex(){
+        ResizableArray list = new ResizableArray();
+        list.Add(5);
+        list.Add(4);
+        list.Add(3);
+        list.Add(2);
+        list.Add(5);
+        list.Add(8);
+        list.Add(9);
+        list.Add(5);
+        list.Add(1);
+       assertEquals(8,list.removeIndex(5));
+       assertEquals(9,list.Get(5));
+       assertEquals(8,list.i);
+
+    }
 }

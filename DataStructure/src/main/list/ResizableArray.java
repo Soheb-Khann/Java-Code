@@ -28,6 +28,7 @@ public class ResizableArray {
         --i;
         System.out.println("Removed : "+list[i]);
     }
+
     public void Find(int f){
         for (int j = 0; j < list.length; j++) {
             if(f == list[j]){

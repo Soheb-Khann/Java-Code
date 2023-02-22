@@ -89,16 +89,37 @@ public class ResizableArray {
     }
 
     /**
+     * Removes given element and shifts the array.
+     * @param num
+     */
+    public int removeElement(int num){
+        int index = indexOf(num);
+        if (index == -1) {return index;}
+        removeIndex(index);
+        return 0;
+    }
+
+    /**
      * Finds the specified element in the list and returns its index
      * @param num
      */
-    public int find(int num){
+    public int indexOf(int num){
         for (int j = 0; j < indexOfLastElement; j++) {
             if(num == list[j]){
                 return j;
             }
         }
         return -1;
+    }
+
+    /**
+     * Returns true if the element is found and false otherwise
+     * @param num
+     */
+    public boolean contains(int num){
+        int index = indexOf(num);
+        if (index == -1){return false;}
+        return true;
     }
 
     /**
@@ -113,6 +134,31 @@ public class ResizableArray {
             }
         }
         return lastIndex ;
+    }
+
+    /**
+     * Removes all the elements but keeps the size of the list
+     */
+    public void clear(){
+        list = new int[size];
+    }
+
+    /**
+     * Return true if the list is Empty otherwise false
+     */
+    public boolean isEmpty(){
+        if (indexOfLastElement > 0){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns the number of element in the list
+     * @return
+     */
+    public int size(){
+        return size;
     }
 
 }

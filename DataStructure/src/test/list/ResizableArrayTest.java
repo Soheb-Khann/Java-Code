@@ -19,11 +19,15 @@ public class ResizableArrayTest {
         assertEquals(3,list.getElementAtIndex(0));
     }
     @Test
-    public void testRemove() {
+    public void testRemoveElement() {
         ResizableArray list = new ResizableArray();
         list.add(5);
         list.add(15);
-        assertEquals(15,list.remove());
+        list.add(10);
+        list.add(13);
+        list.add(12);
+        assertEquals(0,list.removeElement(10));
+
     }
     @Test
     public void testFind() {
@@ -33,7 +37,7 @@ public class ResizableArrayTest {
         list.add(14);
         list.add(17);
         list.add(10);
-        assertEquals(3,list.find(17));
+        assertEquals(3,list.indexOf(17));
     }
     @Test
     public void testLastIndexOf(){
@@ -63,6 +67,19 @@ public class ResizableArrayTest {
         list.add(1);
        assertEquals(8,list.removeIndex(5));
        assertEquals(9,list.getElementAtIndex(5));
+
+    }
+    @Test
+    public void testContains(){
+       ResizableArray list = new ResizableArray();
+        list.add(4);
+        list.add(3);
+        list.add(2);
+        if (list.contains(3)){
+            assertEquals(0,0);
+        }
+        else
+            assertEquals(0,1);
 
     }
 }

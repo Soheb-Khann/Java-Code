@@ -21,15 +21,24 @@ public class ResizableArray {
     }
 
     public ResizableArray(){
+        size = 50;
         list = new int[50] ;
         indexOfLastElement = 0;
     }
 
     /**
      * @param num
-     * Takes the number to add at the end of the list
+     * Takes the number to add at the end of the list.
      */
     public void add(int num){
+        if (indexOfLastElement == size-1){
+            size = size + 50;
+            int list2 [] = new int[size];
+            for (int i = 0; i <= indexOfLastElement; i++) {
+               list2[i] = list[i];
+            }
+            list = list2;
+        }
         list[indexOfLastElement] = num;
         indexOfLastElement++;
     }
@@ -41,25 +50,42 @@ public class ResizableArray {
      * Returns the element
      */
     public int getElementAtIndex(int index){
+        if (index < 0 ){ return -1;};
         return list[index];
     }
 
     /**
      * Sets element at specified index
+     *
      * @param index
      * @param num
      */
     public void set(int index, int num) {
-     list[index] = num;
+        if (index < 0 ){ return;}
+        list[index] = num;
     }
 
     /**
      * Removes last element and returns it
      */
     public int remove(){
+        if (indexOfLastElement == 0 ){ return -1;}
         --indexOfLastElement;
-        System.out.println("Removed : "+list[indexOfLastElement]);
         return list[indexOfLastElement];
+    }
+
+    /**
+     * Removes element at given index, shifts the elements and returns the removed element
+     * @param index
+     */
+    public int removeIndex(int index){
+        if (index < 0 ){ return -1;}
+        int removedElement = list[index];
+        for (int j = index; j < indexOfLastElement -1; j++) {
+            list[j] = list[j+1];
+        }
+        --indexOfLastElement;
+        return removedElement;
     }
 
     /**
@@ -89,16 +115,4 @@ public class ResizableArray {
         return lastIndex ;
     }
 
-    /**
-     * Removes element at given index, shifts the elements and returns the removed element
-     * @param index
-     */
-    public int removeIndex(int index){
-        int removedElement = list[index];
-        for (int j = index; j < indexOfLastElement -1; j++) {
-        list[j] = list[j+1];
-        }
-        --indexOfLastElement;
-        return removedElement;
-    }
 }

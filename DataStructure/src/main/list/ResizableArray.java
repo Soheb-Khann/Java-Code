@@ -1,56 +1,63 @@
 package main.list;
 
 /**
- * Creates a Resizable List of Integer elements like the ArrayList Implementation in Java
+ * Represents a resizable array of integer elements.
  */
 
 public class ResizableArray {
     private int size;
-    private int indexOfLastElement;
+    private int firstBlankIndex;
     private int list[];
 
     /**
+     * Constructs a resizable array
      * @param size
-     * Takes in the size of the list.
-     * If left blank default size of 50 will be used
+     * size of the list
      */
     public ResizableArray(int size){
         this.size = size;
         list = new int[this.size] ;
-        indexOfLastElement = 0;
-    }
-
-    public ResizableArray(){
-        size = 50;
-        list = new int[50] ;
-        indexOfLastElement = 0;
+        firstBlankIndex = 0;
     }
 
     /**
+     * Constructs a resizable array with default size 50
+     */
+    public ResizableArray(){
+        size = 50;
+        list = new int[50] ;
+        firstBlankIndex = 0;
+    }
+
+    /**
+     * Adds an element to the list
      * @param num
-     * Takes the number to add at the end of the list.
      */
     public void add(int num){
-        if (indexOfLastElement == size-1){
-            size = size + 50;
+        if (size == 0){
+            list[size] = num;
+            return;
+        }
+        else if (firstBlankIndex == size){
+            size = size*2 ;
             int list2 [] = new int[size];
-            for (int i = 0; i <= indexOfLastElement; i++) {
+            for (int i = 0; i < firstBlankIndex; i++) {
                list2[i] = list[i];
             }
             list = list2;
         }
-        list[indexOfLastElement] = num;
-        indexOfLastElement++;
+        list[firstBlankIndex] = num;
+        firstBlankIndex++;
     }
 
     /**
+     * Get element at the given index.
      *@param index
-     * Gets the element at index
      * @return
      * Returns the element
      */
-    public int getElementAtIndex(int index){
-        if (index < 0 ){ return -1;};
+    public int get(int index){
+        if (index < 0 || index >= firstBlankIndex ){ return -1;}
         return list[index];
     }
 
@@ -61,7 +68,7 @@ public class ResizableArray {
      * @param num
      */
     public void set(int index, int num) {
-        if (index < 0 ){ return;}
+        if (index < 0 || index >= firstBlankIndex ){ return;}
         list[index] = num;
     }
 
@@ -69,9 +76,9 @@ public class ResizableArray {
      * Removes last element and returns it
      */
     public int remove(){
-        if (indexOfLastElement == 0 ){ return -1;}
-        --indexOfLastElement;
-        return list[indexOfLastElement];
+        if (firstBlankIndex == 0 || size == 0 ){ return -1;}
+        --firstBlankIndex;
+        return list[firstBlankIndex];
     }
 
     /**
@@ -79,12 +86,12 @@ public class ResizableArray {
      * @param index
      */
     public int removeIndex(int index){
-        if (index < 0 ){ return -1;}
+        if (index < 0 || index >= firstBlankIndex ){ return -1;}
         int removedElement = list[index];
-        for (int j = index; j < indexOfLastElement -1; j++) {
+        for (int j = index; j < firstBlankIndex -1; j++) {
             list[j] = list[j+1];
         }
-        --indexOfLastElement;
+        --firstBlankIndex;
         return removedElement;
     }
 
@@ -104,7 +111,7 @@ public class ResizableArray {
      * @param num
      */
     public int indexOf(int num){
-        for (int j = 0; j < indexOfLastElement; j++) {
+        for (int j = 0; j < firstBlankIndex; j++) {
             if(num == list[j]){
                 return j;
             }
@@ -117,9 +124,7 @@ public class ResizableArray {
      * @param num
      */
     public boolean contains(int num){
-        int index = indexOf(num);
-        if (index == -1){return false;}
-        return true;
+        return indexOf(num) != -1;
     }
 
     /**
@@ -128,9 +133,10 @@ public class ResizableArray {
      */
     public int lastIndexOf(int num){
         int lastIndex = -1;
-        for (int j = 0; j< indexOfLastElement; j++){
-            if (num == list[j]){
-                lastIndex = j;
+        for (int i = firstBlankIndex; i >= 0; i--){
+            if (num == list[i]){
+                lastIndex = i;
+                break;
             }
         }
         return lastIndex ;
@@ -147,10 +153,7 @@ public class ResizableArray {
      * Return true if the list is Empty otherwise false
      */
     public boolean isEmpty(){
-        if (indexOfLastElement > 0){
-            return false;
-        }
-        return true;
+        return firstBlankIndex == 0;
     }
 
     /**
@@ -158,7 +161,7 @@ public class ResizableArray {
      * @return
      */
     public int size(){
-        return size;
+        return firstBlankIndex;
     }
 
 }

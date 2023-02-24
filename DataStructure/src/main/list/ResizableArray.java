@@ -2,8 +2,8 @@ package main.list;
 
 /**
  * Represents a resizable array of integer elements.
+ * @author Soheb Khan
  */
-
 public class ResizableArray {
     private int writeIndex;
     private int list[];
@@ -41,15 +41,15 @@ public class ResizableArray {
     }
 
     /**
-     * Get an element at the given index.
+     * Gets an element at the given index.
      * @param index
      * @return
+     * returns the element.
      * @throws ArrayIndexOutOfBoundsException
      * If the given index is less than 0
      * or if the given index is greater than or equals to size.
-     * returns the element.
      */
-    public int get(int index) throws ArrayIndexOutOfBoundsException {
+    public int get(int index) {
         if (index < 0 || index >= writeIndex){ throw new ArrayIndexOutOfBoundsException(); }
         return list[index];
     }
@@ -59,6 +59,9 @@ public class ResizableArray {
      *
      * @param index
      * @param num
+     * @throws ArrayIndexOutOfBoundsException
+     * If the given index is less than 0
+     * or if the given index is greater than or equals to size.
      */
     public void set(int index, int num)  {
         if (index < 0 || index >= writeIndex) {
@@ -71,6 +74,9 @@ public class ResizableArray {
      * Removes element at given index.
      * returns the removed element.
      * @param index
+     * @throws ArrayIndexOutOfBoundsException
+     * If the given index is less than 0
+     * or if the given index is greater than or equals to size.
      */
     public int removeAtIndex(int index) {
         if (index < 0 || index >= writeIndex) {
@@ -111,7 +117,7 @@ public class ResizableArray {
     }
 
     /**
-     * Determines whether element exists or not.
+     * Determines whether given element exists or not.
      * @param num
      * @return true if the element is found, false otherwise.
      */
@@ -134,7 +140,7 @@ public class ResizableArray {
     }
 
     /**
-     * Removes all the elements but keeps the size of the list.
+     * Removes all the elements but keeps the size.
      */
     public void clear(){
         list = new int[list.length];
@@ -149,11 +155,10 @@ public class ResizableArray {
     }
 
     /**
-     * Returns the number of element in the list.
+     * Returns the size of resizable array.
      * @return
      */
     public int size(){
         return writeIndex;
     }
-
 }

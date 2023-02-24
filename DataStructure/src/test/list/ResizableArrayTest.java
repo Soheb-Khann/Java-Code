@@ -6,20 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ResizableArrayTest {
     @Test
     public void testAdd() {
-        ResizableArray list = new ResizableArray(5);
+        ResizableArray list = new ResizableArray(0);
         list.add(1);
         list.add(2);
         list.add(3);
-        list.add(4);
-        list.add(5);
-        list.add(6);
-        list.add(7);
-        list.add(8);
-        list.add(9);
-        list.add(10);
-        list.add(11);
-       assertEquals(11,list.size());
-
+        assertEquals(3,list.size());
     }
     @Test
     public void testSet() {
@@ -41,7 +32,7 @@ public class ResizableArrayTest {
         list.add(9);
         list.add(5);
         list.add(1);
-        assertEquals(8,list.removeIndex(5));
+        assertEquals(8,list.removeAtIndex(5));
         list.add(9);
         assertEquals(9,list.get(8));
 
@@ -54,7 +45,7 @@ public class ResizableArrayTest {
         list.add(10);
         list.add(13);
         list.add(12);
-        assertEquals(0,list.removeElement(10));
+        assertEquals(0,list.remove(10));
 
     }
     @Test

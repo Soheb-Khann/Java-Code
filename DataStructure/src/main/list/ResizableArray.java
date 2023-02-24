@@ -5,113 +5,104 @@ package main.list;
  */
 
 public class ResizableArray {
-    private int size;
-    private int firstBlankIndex;
+    private int writeIndex;
     private int list[];
 
     /**
-     * Constructs a resizable array
+     * Constructs a resizable array.
      * @param size
-     * size of the list
+     * size of the list.
      */
     public ResizableArray(int size){
-        this.size = size;
-        list = new int[this.size] ;
-        firstBlankIndex = 0;
+        list = new int[size] ;
     }
 
     /**
-     * Constructs a resizable array with default size 50
+     * Constructs a resizable array with initial capacity 10.
      */
     public ResizableArray(){
-        size = 50;
-        list = new int[50] ;
-        firstBlankIndex = 0;
+        list = new int[10] ;
     }
-
+    public void ensureCapacity(){
+        if (writeIndex == list.length){
+            int list2 [] = new int[(list.length+1)*2];
+            System.arraycopy(list,0,list2,0,list.length);
+            list = list2;
+        }
+    }
     /**
-     * Adds an element to the list
+     * Adds an element to the array.
      * @param num
      */
     public void add(int num){
-        if (size == 0){
-            list[size] = num;
-            return;
-        }
-        else if (firstBlankIndex == size){
-            size = size*2 ;
-            int list2 [] = new int[size];
-            for (int i = 0; i < firstBlankIndex; i++) {
-               list2[i] = list[i];
-            }
-            list = list2;
-        }
-        list[firstBlankIndex] = num;
-        firstBlankIndex++;
+        ensureCapacity();
+        list[writeIndex] = num;
+        writeIndex++;
     }
 
     /**
-     * Get element at the given index.
-     *@param index
+     * Get an element at the given index.
+     * @param index
      * @return
-     * Returns the element
+     * @throws ArrayIndexOutOfBoundsException
+     * If the given index is less than 0
+     * or if the given index is greater than or equals to size.
+     * returns the element.
      */
-    public int get(int index){
-        if (index < 0 || index >= firstBlankIndex ){ return -1;}
+    public int get(int index) throws ArrayIndexOutOfBoundsException {
+        if (index < 0 || index >= writeIndex){ throw new ArrayIndexOutOfBoundsException(); }
         return list[index];
     }
 
     /**
-     * Sets element at specified index
+     * Sets given element at the specified index.
      *
      * @param index
      * @param num
      */
-    public void set(int index, int num) {
-        if (index < 0 || index >= firstBlankIndex ){ return;}
+    public void set(int index, int num)  {
+        if (index < 0 || index >= writeIndex) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
         list[index] = num;
     }
 
     /**
-     * Removes last element and returns it
-     */
-    public int remove(){
-        if (firstBlankIndex == 0 || size == 0 ){ return -1;}
-        --firstBlankIndex;
-        return list[firstBlankIndex];
-    }
-
-    /**
-     * Removes element at given index, shifts the elements and returns the removed element
+     * Removes element at given index.
+     * returns the removed element.
      * @param index
      */
-    public int removeIndex(int index){
-        if (index < 0 || index >= firstBlankIndex ){ return -1;}
+    public int removeAtIndex(int index) {
+        if (index < 0 || index >= writeIndex) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
         int removedElement = list[index];
-        for (int j = index; j < firstBlankIndex -1; j++) {
+        for (int j = index; j < writeIndex - 1; j++) {
             list[j] = list[j+1];
         }
-        --firstBlankIndex;
+        --writeIndex;
         return removedElement;
     }
 
     /**
-     * Removes given element and shifts the array.
+     * Removes given element.
      * @param num
+     * @return true when given element is removed, false otherwise.
      */
-    public int removeElement(int num){
+    public boolean remove(int num){
         int index = indexOf(num);
-        if (index == -1) {return index;}
-        removeIndex(index);
-        return 0;
+        if (index == -1) {return false;}
+        removeAtIndex(index);
+        return true;
     }
 
     /**
-     * Finds the specified element in the list and returns its index
+     * Returns the index of the given element.
      * @param num
+     * @return the index of the given element. if the element is not found then it returns -1.
      */
     public int indexOf(int num){
-        for (int j = 0; j < firstBlankIndex; j++) {
+        for (int j = 0; j < writeIndex; j++) {
             if(num == list[j]){
                 return j;
             }
@@ -120,48 +111,49 @@ public class ResizableArray {
     }
 
     /**
-     * Returns true if the element is found and false otherwise
+     * Determines whether element exists or not.
      * @param num
+     * @return true if the element is found, false otherwise.
      */
     public boolean contains(int num){
         return indexOf(num) != -1;
     }
 
     /**
-     * Returns last index of given element
+     * Returns the index of the last occurrence of the given element.
      * @param num
+     * @return the index of the last occurrence of the given element, -1 otherwise.
      */
     public int lastIndexOf(int num){
-        int lastIndex = -1;
-        for (int i = firstBlankIndex; i >= 0; i--){
+        for (int i = writeIndex; i >= 0; i--){
             if (num == list[i]){
-                lastIndex = i;
-                break;
+                return i ;
             }
         }
-        return lastIndex ;
+        return -1 ;
     }
 
     /**
-     * Removes all the elements but keeps the size of the list
+     * Removes all the elements but keeps the size of the list.
      */
     public void clear(){
-        list = new int[size];
+        list = new int[list.length];
+        writeIndex = 0;
     }
 
     /**
-     * Return true if the list is Empty otherwise false
+     * Return true if the list is empty otherwise false.
      */
     public boolean isEmpty(){
-        return firstBlankIndex == 0;
+        return writeIndex == 0;
     }
 
     /**
-     * Returns the number of element in the list
+     * Returns the number of element in the list.
      * @return
      */
     public int size(){
-        return firstBlankIndex;
+        return writeIndex;
     }
 
 }

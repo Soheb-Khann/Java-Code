@@ -85,4 +85,113 @@ public class ResizableArrayTest {
         list.add(1);
         assertEquals(7,list.lastIndexOf(5));
     }
+    @Test
+    public void testAddAll(){
+        ResizableArray a1 = new ResizableArray(5);
+        ResizableArray a2 = new ResizableArray(5);
+        a1.add(1);
+        a1.add(2);
+        a1.add(3);
+        a1.add(4);
+        a1.add(5);
+        /////////
+        a2.add(6);
+        a2.add(7);
+        a2.add(8);
+        a2.add(9);
+        a2.add(10);
+        a1.addAll(a2);
+
+    }
+    @Test
+    public void testRemoveAll(){
+        ResizableArray a1 = new ResizableArray(5);
+        ResizableArray a2 = new ResizableArray(5);
+        a1.add(1);
+        a1.add(2);
+        a1.add(3);
+        a1.add(4);
+        a1.add(4);
+        a1.add(5);
+        a1.add(5);
+        /////////
+        a2.add(1);
+        a2.add(2);
+        a2.add(3);
+        a2.add(4);
+        a2.add(5);
+        /////////
+        a1.removeAll(a2);
+        for (int i = 0; i < a1.size(); i++) {
+            System.out.println(a1.get(i));
+        }
+    }
+    @Test
+    public void testRetainAll(){
+        ResizableArray a1 = new ResizableArray(5);
+        ResizableArray a2 = new ResizableArray(5);
+        a1.add(1);
+        a1.add(2);
+        a1.add(0);
+        a1.add(5);
+        a1.add(5);
+        /////////
+        a2.add(5);
+        a2.add(2);
+        a2.add(4);
+        a2.add(2);
+        a2.add(4);
+        /////////
+        a1.retainAll(a2);
+    }
+    @Test
+    public void testContainsAll(){
+        ResizableArray a1 = new ResizableArray(5);
+        ResizableArray a2 = new ResizableArray(5);
+        a1.add(3);
+        a1.add(5);
+        a1.add(4);
+        a1.add(3);
+        a1.add(2);
+        /////////
+        a2.add(1);
+        a2.add(3);
+        a2.add(4);
+        a2.add(5);
+        a2.add(2);
+        /////////
+        System.out.println(a1.containsAll(a2));
+    }
+    @Test
+    public void testToArray(){
+        ResizableArray a1 = new ResizableArray(5);
+        a1.add(3);
+        a1.add(5);
+        a1.add(4);
+        a1.add(3);
+        a1.add(2);
+        int a[] = a1.toArray();
+        assertEquals(4,a[2]);
+    }
+    @Test
+    public void testEquals(){
+        ResizableArray a1 = new ResizableArray(5);
+        ResizableArray a2 = new ResizableArray(5);
+        a1.add(1);
+        a1.add(3);
+        a1.add(4);
+        a1.add(5);
+        a1.add(2);
+        /////////
+        a2.add(1);
+        a2.add(3);
+        a2.add(4);
+        a2.add(5);
+        a2.add(2);
+        a2.add(3);
+        a2.add(4);
+        a2.add(5);
+        /////////
+        System.out.println(a1.equals(a2));
+    }
 }

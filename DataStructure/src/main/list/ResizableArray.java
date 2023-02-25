@@ -54,7 +54,9 @@ public class ResizableArray {
      *  or if the given index is greater than or equals to size.
      */
     public int get(int index) {
-        if (index < 0 || index >= writeIndex){ throw new ArrayIndexOutOfBoundsException(); }
+        if (index < 0 || index >= writeIndex){
+            throw new ArrayIndexOutOfBoundsException();
+        }
         return list[index];
     }
 
@@ -164,5 +166,103 @@ public class ResizableArray {
      */
     public int size(){
         return writeIndex;
+    }
+
+    /**
+     * add all the elements from given resizableArray
+     * @param resizableArray
+     * NOT WORKING CURRENTLY
+     */
+    public void addAll(ResizableArray resizableArray){
+        for (int i = 0; i < list.length; i++){
+            add(resizableArray.get(i));
+        }
+    }
+
+    /**
+     * removes all matching elements
+     * NOT WORKING CURRENTLY
+     * @param resizableArray
+     */
+    public void removeAll(ResizableArray resizableArray) {
+        if (resizableArray.size() == 0 || size() == 0){
+            return;
+        }
+        for (int i = 0; i < size(); i++) {
+            for (int j = 0; j < resizableArray.size(); j++) {
+                if (list[i] == resizableArray.get(j)) {
+                    remove(list[i]);
+                }
+            }
+        }
+    }
+
+    /**
+     * retains elements which matches with the given elements of given resizable array.
+     * NOT WORKING CURRENTLY
+     * @param resizableArray
+     */
+    public void retainAll(ResizableArray resizableArray){
+        for (int i = 0; i < size(); i++) {
+            for (int j = 0; j < resizableArray.size(); j++) {
+                if (list[i] != resizableArray.get(i)){
+                    remove(list[i]);
+                }
+            }
+        }
+    }
+
+    /**
+     * Checks the elements of given resizable array exist in this resizable array
+     * @param resizableArray
+     * @return true when exist otherwise false
+     */
+    public boolean containsAll(ResizableArray resizableArray){
+//      int num = 0;
+        boolean flag = true;
+        for (int i = 0; i < size(); i++) {
+            for (int j = 0; j < resizableArray.size(); j++) {
+               if (list[i] == resizableArray.get(j) ){
+                   flag = true;
+                   break;
+               }
+               else {
+                   flag = false;
+               }
+            }
+            if (!flag){
+                return flag;
+            }
+        }
+//        System.out.println("num : "+num);
+//        System.out.println("size : "+size());
+//        if (num == size()){
+//            return true;
+//        }
+        return flag;
+    }
+
+    /**
+     * Gives array that have element of resizable array
+     * @return array variable
+     */
+    public int[] toArray(){
+        int list2 [] = Arrays.copyOf(list,list.length);
+        list = list2;
+        return list2;
+    }
+
+    /**
+     * Checks whether the array is identical to the current array.
+     * @param resizableArray
+     * @return true when identical and false otherwise.
+     */
+    public boolean equals(ResizableArray resizableArray){
+        for (int i = 0; i < list.length; i++) {
+            if (list[i] != resizableArray.get(i)){
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -1,5 +1,7 @@
 package main.list;
 
+import java.util.Arrays;
+
 /**
  * Represents a resizable array of integer elements.
  * @author Soheb Khan
@@ -24,9 +26,12 @@ public class ResizableArray {
         list = new int[10] ;
     }
     public void ensureCapacity(){
+        if(list.length == 0){
+            list = new int[10];
+            return;
+        }
         if (writeIndex == list.length){
-            int list2 [] = new int[(list.length+1)*2];
-            System.arraycopy(list,0,list2,0,list.length);
+            int list2 [] = Arrays.copyOf(list,list.length*2);
             list = list2;
         }
     }
@@ -43,11 +48,10 @@ public class ResizableArray {
     /**
      * Gets an element at the given index.
      * @param index
-     * @return
-     * returns the element.
+     * @return the element.
      * @throws ArrayIndexOutOfBoundsException
-     * If the given index is less than 0
-     * or if the given index is greater than or equals to size.
+     *  If the given index is less than 0
+     *  or if the given index is greater than or equals to size.
      */
     public int get(int index) {
         if (index < 0 || index >= writeIndex){ throw new ArrayIndexOutOfBoundsException(); }
@@ -60,8 +64,8 @@ public class ResizableArray {
      * @param index
      * @param num
      * @throws ArrayIndexOutOfBoundsException
-     * If the given index is less than 0
-     * or if the given index is greater than or equals to size.
+     *  If the given index is less than 0
+     *  or if the given index is greater than or equals to size.
      */
     public void set(int index, int num)  {
         if (index < 0 || index >= writeIndex) {
@@ -72,11 +76,11 @@ public class ResizableArray {
 
     /**
      * Removes element at given index.
-     * returns the removed element.
      * @param index
+     * @return  the removed element.
      * @throws ArrayIndexOutOfBoundsException
-     * If the given index is less than 0
-     * or if the given index is greater than or equals to size.
+     *  If the given index is less than 0
+     *  or if the given index is greater than or equals to size.
      */
     public int removeAtIndex(int index) {
         if (index < 0 || index >= writeIndex) {

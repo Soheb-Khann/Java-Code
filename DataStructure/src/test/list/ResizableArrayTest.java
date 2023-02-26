@@ -5,12 +5,35 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ResizableArrayTest {
     @Test
-    public void testAdd() {
+    public void testAddNormally() {
+        ResizableArray list = new ResizableArray(0);
+        list.add(1);
+        assertEquals(1,list.get(0));
+    }
+    @Test
+    public void testAddDoubleSize() {
+        ResizableArray list = new ResizableArray(1);
+        list.add(1);
+        list.add(2);
+        assertEquals(2,list.size());
+        assertEquals(1,list.get(0));
+        assertEquals(2,list.get(1));
+    }
+    @Test
+    public void testAddZeroSize() {
         ResizableArray list = new ResizableArray(0);
         list.add(1);
         list.add(2);
         list.add(3);
         assertEquals(3,list.size());
+    }
+    @Test
+    public void testAddNegative() {
+        ResizableArray list = new ResizableArray(5);
+        list.add(-1);
+        list.add(-2);
+        list.add(-3);
+        assertEquals(-3,list.get(2));
     }
     @Test
     public void testSet() {
@@ -115,17 +138,15 @@ public class ResizableArrayTest {
         a1.add(2);
         a1.add(6);
         a1.add(8);
-        a1.add(3);
         a1.add(6);
         /////////
         a2.add(1);
-        a2.add(6);
-        a2.add(8);
         a2.add(2);
         /////////
         a1.removeAll(a2);
-        a1.add(9);
         a1.add(8);
+        a1.add(9);
+        a1.add(7);
         for (int i = 0; i < a1.size(); i++) {
             System.out.println(a1.get(i));
         }
@@ -138,15 +159,15 @@ public class ResizableArrayTest {
         a1.add(2);
         a1.add(0);
         a1.add(5);
-        a1.add(5);
         /////////
+        a2.add(2);
         a2.add(5);
-        a2.add(2);
-        a2.add(4);
-        a2.add(2);
-        a2.add(4);
         /////////
         a1.retainAll(a2);
+        for (int i = 0; i < a1.size(); i++) {
+            System.out.println(a1.get(i));
+        }
+
     }
     @Test
     public void testContainsAll(){

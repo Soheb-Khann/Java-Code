@@ -187,7 +187,6 @@ public class ResizableArray {
 
     /**
      * removes all matching elements
-     * NOT WORK WHEN ALL THE ELEMENTS ARE REMOVED
      * @param resizableArray
      */
     public void removeAll(ResizableArray resizableArray) {
@@ -202,21 +201,24 @@ public class ResizableArray {
                 }
             }
         }
-        for (int i = 0; i < size() - 1; i++) {
-            int lastUnmatched = i;
+        for (int i = 0; i < size() - 1 ; i++) {
+            int firstUnmatched = i;
             if (list[i] == -1) {
                 for (int j = i; j < size() - 1; j++) {
                     if (list[j + 1] != -1) {
-                        lastUnmatched = j+1;
-                       break;
+                        firstUnmatched = j+1;
+                        break;
                     }
                 }
-                for (int j = lastUnmatched; j > i ; j--) {
+                for (int j = firstUnmatched; j > i ; j--) {
                     swap(j,j-1);
                 }
            }
         dec++;}
         writeIndex -= dec;
+        if (list[writeIndex-1] == -1){
+            writeIndex--;
+        }
     }
     public void swap(int i, int j){
         int temp = list[i];
@@ -230,12 +232,32 @@ public class ResizableArray {
      * @param resizableArray
      */
     public void retainAll(ResizableArray resizableArray){
-        for (int i = 0; i < size(); i++) {
-            for (int j = 0; j < resizableArray.size(); j++) {
-                if (list[i] != resizableArray.get(i)){
-                    remove(list[i]);
+        int dec = 0;
+        for (int i = 0; i < resizableArray.size(); i++) {
+            for (int j = 0; j < size(); j++) {
+                if (resizableArray.get(i) == list[j]) {
+                    continue;
+                }
+                list[j] = -1;
+            }
+        }
+        for (int i = 0; i < size() - 1 ; i++) {
+            int firstUnmatched = i;
+            if (list[i] == -1) {
+                for (int j = i; j < size() - 1; j++) {
+                    if (list[j + 1] != -1) {
+                        firstUnmatched = j+1;
+                        break;
+                    }
+                }
+                for (int j = firstUnmatched; j > i ; j--) {
+                    swap(j,j-1);
                 }
             }
+            dec++;}
+        writeIndex -= dec;
+        if (list[writeIndex-1] == -1){
+            writeIndex--;
         }
     }
 

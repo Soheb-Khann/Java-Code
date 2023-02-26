@@ -88,13 +88,17 @@ public class ResizableArrayTest {
     @Test
     public void testAddAll(){
         ResizableArray a1 = new ResizableArray(5);
-        ResizableArray a2 = new ResizableArray(5);
+        ResizableArray a2 = new ResizableArray(16);
         a1.add(1);
         a1.add(2);
         a1.add(3);
         a1.add(4);
         a1.add(5);
         /////////
+        a2.add(6);
+        a2.add(6);
+        a2.add(6);
+        a2.add(6);
         a2.add(6);
         a2.add(7);
         a2.add(8);
@@ -109,19 +113,19 @@ public class ResizableArrayTest {
         ResizableArray a2 = new ResizableArray(5);
         a1.add(1);
         a1.add(2);
+        a1.add(6);
+        a1.add(8);
         a1.add(3);
-        a1.add(4);
-        a1.add(4);
-        a1.add(5);
-        a1.add(5);
+        a1.add(6);
         /////////
         a2.add(1);
+        a2.add(6);
+        a2.add(8);
         a2.add(2);
-        a2.add(3);
-        a2.add(4);
-        a2.add(5);
         /////////
         a1.removeAll(a2);
+        a1.add(9);
+        a1.add(8);
         for (int i = 0; i < a1.size(); i++) {
             System.out.println(a1.get(i));
         }
@@ -150,14 +154,11 @@ public class ResizableArrayTest {
         ResizableArray a2 = new ResizableArray(5);
         a1.add(3);
         a1.add(5);
-        a1.add(4);
-        a1.add(3);
         a1.add(2);
         /////////
         a2.add(1);
         a2.add(3);
         a2.add(4);
-        a2.add(5);
         a2.add(2);
         /////////
         System.out.println(a1.containsAll(a2));
@@ -184,7 +185,6 @@ public class ResizableArrayTest {
         a1.add(2);
         /////////
         a2.add(1);
-        a2.add(3);
         a2.add(4);
         a2.add(5);
         a2.add(2);

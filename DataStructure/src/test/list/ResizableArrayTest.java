@@ -36,12 +36,33 @@ public class ResizableArrayTest {
         assertEquals(-3,list.get(2));
     }
     @Test
+    public void testGet(){
+        ResizableArray list = new ResizableArray(3);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        assertEquals(1,list.get(0));
+        assertEquals(2,list.get(1));
+        assertEquals(3,list.get(2));
+    }
+    @Test
+    public void testGetNoElements(){
+        ResizableArray list = new ResizableArray(0);
+        list.get(0);
+    }
+
+    @Test
     public void testSet() {
         ResizableArray list = new ResizableArray();
         list.add(5);
         list.add(15);
+        list.set(1,3);
+        assertEquals(3,list.get(1));
+    }
+    @Test
+    public void testSetNoElements() {
+        ResizableArray list = new ResizableArray();
         list.set(0,3);
-        assertEquals(3,list.get(0));
     }
     @Test
     public void testRemoveIndex(){

@@ -198,6 +198,7 @@ public class ResizableArray {
             for (int j = 0; j < resizableArray.size(); j++) {
                 if (list[i] == resizableArray.get(j)) {
                     list[i] = -1;
+                    dec++;
                 }
             }
         }
@@ -213,12 +214,13 @@ public class ResizableArray {
                 for (int j = firstUnmatched; j > i ; j--) {
                     swap(j,j-1);
                 }
-           }
-        dec++;}
-        writeIndex -= dec;
-        if (list[writeIndex-1] == -1){
-            writeIndex--;
+                   }
+
         }
+        writeIndex = writeIndex - dec ;
+//        if (list[writeIndex-1] == -1){
+//            writeIndex--;
+//        }
     }
     public void swap(int i, int j){
         int temp = list[i];
@@ -233,12 +235,17 @@ public class ResizableArray {
      */
     public void retainAll(ResizableArray resizableArray){
         int dec = 0;
-        for (int i = 0; i < resizableArray.size(); i++) {
-            for (int j = 0; j < size(); j++) {
-                if (resizableArray.get(i) == list[j]) {
-                    continue;
+        for (int i = 0; i < size(); i++) {
+            int flag = 0;
+            for (int j = 0; j < resizableArray.size(); j++) {
+                if (list[i] == resizableArray.get(j)) {
+                    flag = 1;
+                    break;
                 }
-                list[j] = -1;
+            }
+            if (flag == 0){
+                list[i] = -1;
+                dec++;
             }
         }
         for (int i = 0; i < size() - 1 ; i++) {
@@ -254,11 +261,11 @@ public class ResizableArray {
                     swap(j,j-1);
                 }
             }
-            dec++;}
-        writeIndex -= dec;
-        if (list[writeIndex-1] == -1){
-            writeIndex--;
         }
+        writeIndex = writeIndex - dec;
+//        if (list[writeIndex-1] == -1){
+//            writeIndex--;
+//        }
     }
 
     /**

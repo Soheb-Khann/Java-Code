@@ -183,7 +183,6 @@ public class ResizableArray {
     public void addAll(ResizableArray resizableArray){
         if (resizableArray.size() >= size()){
             list = Arrays.copyOf(list,size()+resizableArray.size());
-//            System.arraycopy(resizableArray,0,list,size(),size() - resizableArray.size());
         }
         for (int i = 0; i < resizableArray.size(); i++){
             add(resizableArray.get(i));
@@ -229,24 +228,6 @@ public class ResizableArray {
         }
         remove(-1);
     }
-//        for (int i = 0; i < size() - 1 ; i++) {
-//            int firstUnmatched = i;
-//            if (list[i] == -1) {
-//                for (int j = i; j < size() - 1; j++) {
-//                    if (list[j + 1] != -1) {
-//                        firstUnmatched = j+1;
-//                        break;
-//                    }
-//                }
-//                for (int j = firstUnmatched; j > i ; j--) {
-//                    swap(j,j-1);
-//                }
-//            }
-//        }
-//        writeIndex = writeIndex - dec;
-//        if (list[writeIndex-1] == -1){
-//            writeIndex--;
-//        }
 
     /**
      * Checks the elements of given resizable array exist in this resizable array
@@ -260,28 +241,6 @@ public class ResizableArray {
             }
         }
         return true;
-////      int num = 0;V
-//        boolean flag = true;
-//        for (int i = 0; i < size(); i++) {
-//            for (int j = 0; j < resizableArray.size(); j++) {
-//               if (list[i] == resizableArray.get(j) ){
-//                   flag = true;
-//                   break;
-//               }
-//               else {
-//                   flag = false;
-//               }
-//            }
-//            if (!flag){
-//                return flag;
-//            }
-//        }
-////        System.out.println("num : "+num);
-////        System.out.println("size : "+size());
-////        if (num == size()){
-////            return true;
-////        }
-//        return flag;
     }
 
     /**

@@ -223,7 +223,6 @@ public class ResizableArrayTest {
         a2.add(3);
         a2.add(4);
         /////////
-        System.out.println(a1.containsAll(a2));
     }
     @Test
     public void testToArray(){

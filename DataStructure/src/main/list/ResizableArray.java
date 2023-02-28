@@ -73,7 +73,7 @@ public class ResizableArray {
      *  or if the given index is greater than or equals to size.
      */
     public void set(int index, int num)  {
-        if (index < 0 || index >= writeIndex) {
+        if (index < 0 || index >= writeIndex || isEmpty()){
             throw new ArrayIndexOutOfBoundsException();
         }
         list[index] = num;
@@ -88,7 +88,7 @@ public class ResizableArray {
      *  or if the given index is greater than or equals to size.
      */
     public int removeAtIndex(int index) {
-        if (index < 0 || index >= writeIndex) {
+        if (index < 0 || index >= writeIndex || isEmpty()) {
             throw new ArrayIndexOutOfBoundsException();
         }
         int removedElement = list[index];
@@ -105,15 +105,18 @@ public class ResizableArray {
      * @return true when given element is removed, false otherwise.
      */
     public boolean remove(int num){
-        int j = 0;
-        for (int i = 0; i < size(); i++){
-            if (list[i] != num) {
-               swap(i,j);
-               j++;
+        if (contains(num)) {
+            int j = 0;
+            for (int i = 0; i < size(); i++) {
+                if (list[i] != num) {
+                    swap(i, j);
+                    j++;
+                }
             }
+            writeIndex = j;
+            return true;
         }
-        writeIndex = j;
-        return true;
+        return false;
     }
 
     /**
@@ -122,9 +125,11 @@ public class ResizableArray {
      * @return the index of the given element. if the element is not found then it returns -1.
      */
     public int indexOf(int num){
-        for (int j = 0; j < writeIndex; j++) {
-            if(num == list[j]){
-                return j;
+        if (!isEmpty()) {
+            for (int j = 0; j < writeIndex; j++) {
+                if (num == list[j]) {
+                    return j;
+                }
             }
         }
         return -1;
@@ -145,7 +150,7 @@ public class ResizableArray {
      * @return the index of the last occurrence of the given element, -1 otherwise.
      */
     public int lastIndexOf(int num){
-        for (int i = writeIndex; i >= 0; i--){
+        for (int i = writeIndex - 1; i >= 0; i--){
             if (num == list[i]){
                 return i ;
             }

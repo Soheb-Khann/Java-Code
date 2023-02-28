@@ -2,9 +2,7 @@ package test.list;
 import main.list.ResizableArray;
 import org.junit.jupiter.api.Test;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ResizableArrayTest {
     /**
@@ -63,8 +61,11 @@ public class ResizableArrayTest {
     @Test
     public void testGetNoElements(){
         ResizableArray list = new ResizableArray(0);
-        list.get(0);
+        assertThrows(ArrayIndexOutOfBoundsException.class,
+                ()->list.get(0));
     }
+
+
 
     @Test
     public void testSet() {
@@ -77,7 +78,8 @@ public class ResizableArrayTest {
     @Test
     public void testSetNoElements() {
         ResizableArray list = new ResizableArray(4);
-        list.set(0,3);
+        assertThrows(ArrayIndexOutOfBoundsException.class,
+                ()->list.set(0,3));
     }
     @Test
     public void testRemoveAtIndex(){
@@ -105,46 +107,30 @@ public class ResizableArrayTest {
         list.add(2);
         list.add(2);
         list.remove(2);
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
+        assertTrue(list.isEmpty());
     }
     @Test
-    public void testFind() {
-        ResizableArray list = new ResizableArray();
+    public void testIndexOf() {
+        ResizableArray list = new ResizableArray(2);
         list.add(5);
         list.add(15);
-        list.add(14);
-        list.add(17);
-        list.add(10);
-        assertEquals(3,list.indexOf(17));
+        assertEquals(1,list.indexOf(15));
     }
     @Test
     public void testContains(){
-        ResizableArray list = new ResizableArray();
+        ResizableArray list = new ResizableArray(2);
         list.add(4);
         list.add(3);
-        list.add(2);
-        if (list.contains(3)){
-            assertEquals(0,0);
-        }
-        else
-            assertEquals(0,1);
-
+        assertTrue(list.contains(3));
     }
     @Test
     public void testLastIndexOf(){
-        ResizableArray list = new ResizableArray();
-        list.add(5);
-        list.add(4);
-        list.add(3);
-        list.add(2);
-        list.add(5);
-        list.add(8);
-        list.add(9);
-        list.add(5);
+        ResizableArray list = new ResizableArray(4);
         list.add(1);
-        assertEquals(7,list.lastIndexOf(5));
+        list.add(2);
+        list.add(3);
+        list.add(1);
+        assertEquals(3,list.lastIndexOf(1));
     }
     @Test
     public void testAddAll(){

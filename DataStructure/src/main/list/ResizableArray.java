@@ -28,7 +28,7 @@ public class ResizableArray {
     public ResizableArray(){
         list = new int[10] ;
     }
-    public void ensureCapacity(){
+    private void ensureCapacity(){
         if(list.length == 0){
             list = new int[10];
             return;
@@ -105,9 +105,14 @@ public class ResizableArray {
      * @return true when given element is removed, false otherwise.
      */
     public boolean remove(int num){
-        int index = indexOf(num);
-        if (index == -1) {return false;}
-        removeAtIndex(index);
+        int j = 0;
+        for (int i = 0; i < size(); i++){
+            if (list[i] != num) {
+               swap(i,j);
+               j++;
+            }
+        }
+        writeIndex = j;
         return true;
     }
 
@@ -194,35 +199,11 @@ public class ResizableArray {
         if (resizableArray.size() == 0 || size() == 0) {
             return;
         }
-        for (int i = 0; i < size(); i++) {
-            for (int j = 0; j < resizableArray.size(); j++) {
-                if (list[i] == resizableArray.get(j)) {
-                    list[i] = -1;
-                    dec++;
-                }
-            }
+        for (int i = 0; i < resizableArray.size(); i++) {
+            remove(resizableArray.get(i));
         }
-        for (int i = 0; i < size() - 1 ; i++) {
-            int firstUnmatched = i;
-            if (list[i] == -1) {
-                for (int j = i; j < size() - 1; j++) {
-                    if (list[j + 1] != -1) {
-                        firstUnmatched = j+1;
-                        break;
-                    }
-                }
-                for (int j = firstUnmatched; j > i ; j--) {
-                    swap(j,j-1);
-                }
-                   }
-
-        }
-        writeIndex = writeIndex - dec ;
-//        if (list[writeIndex-1] == -1){
-//            writeIndex--;
-//        }
     }
-    public void swap(int i, int j){
+    private void swap(int i, int j){
         int temp = list[i];
         list[i] = list[j];
         list[j] = temp;
@@ -234,7 +215,6 @@ public class ResizableArray {
      * @param resizableArray
      */
     public void retainAll(ResizableArray resizableArray){
-        int dec = 0;
         for (int i = 0; i < size(); i++) {
             int flag = 0;
             for (int j = 0; j < resizableArray.size(); j++) {
@@ -245,28 +225,28 @@ public class ResizableArray {
             }
             if (flag == 0){
                 list[i] = -1;
-                dec++;
             }
         }
-        for (int i = 0; i < size() - 1 ; i++) {
-            int firstUnmatched = i;
-            if (list[i] == -1) {
-                for (int j = i; j < size() - 1; j++) {
-                    if (list[j + 1] != -1) {
-                        firstUnmatched = j+1;
-                        break;
-                    }
-                }
-                for (int j = firstUnmatched; j > i ; j--) {
-                    swap(j,j-1);
-                }
-            }
-        }
-        writeIndex = writeIndex - dec;
+        remove(-1);
+    }
+//        for (int i = 0; i < size() - 1 ; i++) {
+//            int firstUnmatched = i;
+//            if (list[i] == -1) {
+//                for (int j = i; j < size() - 1; j++) {
+//                    if (list[j + 1] != -1) {
+//                        firstUnmatched = j+1;
+//                        break;
+//                    }
+//                }
+//                for (int j = firstUnmatched; j > i ; j--) {
+//                    swap(j,j-1);
+//                }
+//            }
+//        }
+//        writeIndex = writeIndex - dec;
 //        if (list[writeIndex-1] == -1){
 //            writeIndex--;
 //        }
-    }
 
     /**
      * Checks the elements of given resizable array exist in this resizable array
@@ -274,28 +254,34 @@ public class ResizableArray {
      * @return true when exist otherwise false
      */
     public boolean containsAll(ResizableArray resizableArray){
-//      int num = 0;
-        boolean flag = true;
-        for (int i = 0; i < size(); i++) {
-            for (int j = 0; j < resizableArray.size(); j++) {
-               if (list[i] == resizableArray.get(j) ){
-                   flag = true;
-                   break;
-               }
-               else {
-                   flag = false;
-               }
-            }
-            if (!flag){
-                return flag;
+        for (int i = 0; i < resizableArray.size(); i++) {
+            if (!contains(resizableArray.get(i))){
+                return false;
             }
         }
-//        System.out.println("num : "+num);
-//        System.out.println("size : "+size());
-//        if (num == size()){
-//            return true;
+        return true;
+////      int num = 0;V
+//        boolean flag = true;
+//        for (int i = 0; i < size(); i++) {
+//            for (int j = 0; j < resizableArray.size(); j++) {
+//               if (list[i] == resizableArray.get(j) ){
+//                   flag = true;
+//                   break;
+//               }
+//               else {
+//                   flag = false;
+//               }
+//            }
+//            if (!flag){
+//                return flag;
+//            }
 //        }
-        return flag;
+////        System.out.println("num : "+num);
+////        System.out.println("size : "+size());
+////        if (num == size()){
+////            return true;
+////        }
+//        return flag;
     }
 
     /**

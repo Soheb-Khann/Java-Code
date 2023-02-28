@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ResizableArrayTest {
     /**
@@ -79,32 +80,34 @@ public class ResizableArrayTest {
         list.set(0,3);
     }
     @Test
-    public void testRemoveIndex(){
-        ResizableArray list = new ResizableArray();
-        list.add(5);
-        list.add(4);
-        list.add(3);
-        list.add(2);
-        list.add(5);
-        list.add(8);
-        list.add(9);
+    public void testRemoveAtIndex(){
+        ResizableArray list = new ResizableArray(2);
         list.add(5);
         list.add(1);
-        assertEquals(8,list.removeAtIndex(5));
-        list.add(9);
-        assertEquals(9,list.get(8));
-
+        assertEquals(1,list.removeAtIndex(1));
+    }
+    @Test
+    public void testRemoveAtIndexOneElement(){
+        ResizableArray list = new ResizableArray(1);
+        list.add(1);
+        assertEquals(1,list.removeAtIndex(0));
     }
     @Test
     public void testRemoveElement() {
-        ResizableArray list = new ResizableArray();
+        ResizableArray list = new ResizableArray(2);
         list.add(5);
         list.add(15);
-        list.add(10);
-        list.add(13);
-        list.add(12);
-        assertEquals(0,list.remove(10));
-
+        assertTrue(list.remove(5));
+    }
+    @Test
+    public void testRemoveElementDuplicates() {
+        ResizableArray list = new ResizableArray(2);
+        list.add(2);
+        list.add(2);
+        list.remove(2);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
     }
     @Test
     public void testFind() {
@@ -171,17 +174,12 @@ public class ResizableArrayTest {
         ResizableArray a2 = new ResizableArray(5);
         a1.add(1);
         a1.add(2);
-        a1.add(2);
-        a1.add(6);
         a1.add(8);
-        a1.add(6);
         /////////
         a2.add(1);
-        a2.add(8);
+        a2.add(2);
         /////////
         a1.removeAll(a2);
-        a1.add(7);
-        a1.add(3);
         a1.add(9);
         for (int i = 0; i < a1.size(); i++) {
             System.out.println(a1.get(i));
@@ -194,19 +192,20 @@ public class ResizableArrayTest {
         a1.add(1);
         a1.add(2);
         a1.add(2);
-        a1.add(1);
-        a1.add(9);
-        a1.add(8);
+        a1.add(4);
+        a1.add(4);
+        a1.add(4);
+        a1.add(0);
         a1.add(7);
-        a1.add(2);
-        a1.add(5);
+        a1.add(8);
+        a1.add(9);
         /////////
-        a2.add(5);
-        a2.add(9);
         a2.add(1);
+        a2.add(2);
+        a2.add(3);
+        a2.add(4);
         /////////
         a1.retainAll(a2);
-        a1.add(7);
         for (int i = 0; i < a1.size(); i++) {
             System.out.println(a1.get(i));
         }
@@ -217,13 +216,12 @@ public class ResizableArrayTest {
         ResizableArray a1 = new ResizableArray(5);
         ResizableArray a2 = new ResizableArray(5);
         a1.add(3);
-        a1.add(5);
         a1.add(2);
+        a1.add(1);
+        a1.add(4);
         /////////
-        a2.add(1);
         a2.add(3);
         a2.add(4);
-        a2.add(2);
         /////////
         System.out.println(a1.containsAll(a2));
     }

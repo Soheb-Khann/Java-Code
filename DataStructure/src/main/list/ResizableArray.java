@@ -186,7 +186,7 @@ public class ResizableArray {
      * @param resizableArray
      */
     public void addAll(ResizableArray resizableArray){
-        if (resizableArray.size() >= size()){
+        if (resizableArray.size() >= size() || resizableArray.size()+size() >= list.length ){
             list = Arrays.copyOf(list,size()+resizableArray.size());
         }
         for (int i = 0; i < resizableArray.size(); i++){
@@ -199,7 +199,6 @@ public class ResizableArray {
      * @param resizableArray
      */
     public void removeAll(ResizableArray resizableArray) {
-        int dec = 0;
         if (resizableArray.size() == 0 || size() == 0) {
             return;
         }
@@ -276,5 +275,26 @@ public class ResizableArray {
             }
         }
         return true;
+    }
+
+    /**
+     * Removes the given range of element.
+     * @param fromIndex
+     * @param toIndex
+     * @return
+     * return true if the elements were removed, false otherwise
+     */
+    public boolean removeRange(int fromIndex,int toIndex){
+        if (fromIndex < 0 || fromIndex >= writeIndex || toIndex <= 0 || toIndex >= writeIndex || fromIndex == toIndex){
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        if (!isEmpty()) {
+            for (int i = fromIndex; i < toIndex; i++) {
+                list[i] = -1;
+            }
+            remove(-1);
+            return true;
+        }
+        return false;
     }
 }

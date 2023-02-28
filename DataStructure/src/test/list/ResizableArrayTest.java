@@ -133,43 +133,60 @@ public class ResizableArrayTest {
         assertEquals(3,list.lastIndexOf(1));
     }
     @Test
-    public void testAddAll(){
-        ResizableArray a1 = new ResizableArray(5);
-        ResizableArray a2 = new ResizableArray(16);
+    public void testAddAllSameSize(){
+        ResizableArray a1 = new ResizableArray(3);
+        ResizableArray a2 = new ResizableArray(3);
+        a1.add(1);
+        a1.add(2);
+        a1.add(3);
+        a2.addAll(a1);
+        assertEquals(1,a2.get(0));
+        assertEquals(2,a2.get(1));
+        assertEquals(3,a2.get(2));
+    }
+    @Test
+    public void testAddAllOneBigger(){
+        ResizableArray a1 = new ResizableArray(4);
+        ResizableArray a2 = new ResizableArray(2);
         a1.add(1);
         a1.add(2);
         a1.add(3);
         a1.add(4);
-        a1.add(5);
-        /////////
-        a2.add(6);
-        a2.add(6);
-        a2.add(6);
-        a2.add(6);
-        a2.add(6);
-        a2.add(7);
-        a2.add(8);
-        a2.add(9);
-        a2.add(10);
-        a1.addAll(a2);
-
+        a2.addAll(a1);
+        assertEquals(1,a2.get(0));
+        assertEquals(2,a2.get(1));
+        assertEquals(3,a2.get(2));
+        assertEquals(4,a2.get(3));
+    }
+    @Test
+    public void testAddAllBothBiggerThanLength(){
+        ResizableArray a1 = new ResizableArray(2);
+        ResizableArray a2 = new ResizableArray(2);
+        a1.add(1);
+        a1.add(2);
+        a2.add(3);
+        a2.add(4);
+        a2.addAll(a1);
+        assertEquals(3,a2.get(0));
+        assertEquals(4,a2.get(1));
+        assertEquals(1,a2.get(2));
+        assertEquals(2,a2.get(3));
     }
     @Test
     public void testRemoveAll(){
-        ResizableArray a1 = new ResizableArray(5);
-        ResizableArray a2 = new ResizableArray(5);
+        ResizableArray a1 = new ResizableArray(4);
+        ResizableArray a2 = new ResizableArray(2);
         a1.add(1);
         a1.add(2);
-        a1.add(8);
+        a1.add(3);
+        a1.add(4);
         /////////
         a2.add(1);
-        a2.add(2);
+        a2.add(3);
         /////////
         a1.removeAll(a2);
-        a1.add(9);
-        for (int i = 0; i < a1.size(); i++) {
-            System.out.println(a1.get(i));
-        }
+        assertFalse(a1.contains(1));
+        assertFalse(a1.contains(3));
     }
     @Test
     public void testRetainAll(){
@@ -209,6 +226,7 @@ public class ResizableArrayTest {
         a2.add(3);
         a2.add(4);
         /////////
+        assertTrue(a1.containsAll(a2));
     }
     @Test
     public void testToArray(){
@@ -241,4 +259,16 @@ public class ResizableArrayTest {
         /////////
         System.out.println(a1.equals(a2));
     }
+
+    @Test
+    public void TestRemoveRange() {
+        ResizableArray a1 = new ResizableArray(5);
+        a1.add(2);
+        a1.add(4);
+        a1.add(1);
+        a1.add(5);
+        a1.removeRange(1,8);
+
+    }
+
 }

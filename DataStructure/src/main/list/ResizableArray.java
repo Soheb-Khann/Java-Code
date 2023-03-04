@@ -14,10 +14,15 @@ public class ResizableArray {
      * Constructs a resizable array.
      * @param size
      * size of the list.
+     * @throws ArrayIndexOutOfBoundsException
+     * @throws NegativeArraySizeException
      */
     public ResizableArray(int size){
         if (size < 0){
             throw new ArrayIndexOutOfBoundsException();
+        }
+        if ( size > Integer.MAX_VALUE){
+            throw new NegativeArraySizeException();
         }
         list = new int[size] ;
     }
@@ -38,14 +43,19 @@ public class ResizableArray {
             list = list2;
         }
     }
+
     /**
      * Adds an element to the array.
      * @param num
      */
-    public void add(int num){
-        ensureCapacity();
-        list[writeIndex] = num;
-        writeIndex++;
+    public boolean add(int num){
+            ensureCapacity();
+            list[writeIndex] = num;
+            writeIndex++;
+            if (list[writeIndex - 1] == num){
+                return true;
+            }
+            return false;
     }
 
     /**
@@ -65,7 +75,6 @@ public class ResizableArray {
 
     /**
      * Sets given element at the specified index.
-     *
      * @param index
      * @param num
      * @throws ArrayIndexOutOfBoundsException
@@ -117,6 +126,11 @@ public class ResizableArray {
             return true;
         }
         return false;
+    }
+    private void swap(int i, int j){
+        int temp = list[i];
+        list[i] = list[j];
+        list[j] = temp;
     }
 
     /**
@@ -186,7 +200,7 @@ public class ResizableArray {
      * @param resizableArray
      */
     public void addAll(ResizableArray resizableArray){
-        if (resizableArray.size() >= size() || resizableArray.size()+size() >= list.length ){
+        if (list.length - size() < resizableArray.size()){
             list = Arrays.copyOf(list,size()+resizableArray.size());
         }
         for (int i = 0; i < resizableArray.size(); i++){
@@ -195,29 +209,24 @@ public class ResizableArray {
     }
 
     /**
-     * removes all matching elements
+     * Removes elements which marches with the elements of given resizable array
      * @param resizableArray
      */
     public void removeAll(ResizableArray resizableArray) {
-        if (resizableArray.size() == 0 || size() == 0) {
-            return;
-        }
         for (int i = 0; i < resizableArray.size(); i++) {
             remove(resizableArray.get(i));
         }
-    }
-    private void swap(int i, int j){
-        int temp = list[i];
-        list[i] = list[j];
-        list[j] = temp;
+        list = Arrays.copyOf(list,writeIndex);
     }
 
     /**
-     * retains elements which matches with the given elements of given resizable array.
-     * NOT WORKING CURRENTLY
+     * retains elements which matches with the elements of given resizable array.
      * @param resizableArray
      */
-    public void retainAll(ResizableArray resizableArray){
+    public boolean retainAll(ResizableArray resizableArray){
+        if (isEmpty() || resizableArray.isEmpty()){
+            return false;
+        }
         for (int i = 0; i < size(); i++) {
             int flag = 0;
             for (int j = 0; j < resizableArray.size(); j++) {
@@ -231,6 +240,8 @@ public class ResizableArray {
             }
         }
         remove(-1);
+        list = Arrays.copyOf(list,writeIndex);
+        return true;
     }
 
     /**
@@ -255,9 +266,7 @@ public class ResizableArray {
         if (isEmpty()){
             throw new ArrayIndexOutOfBoundsException();
         }
-        int list2 [] = Arrays.copyOf(list,list.length);
-        list = list2;
-        return list2;
+        return Arrays.copyOf(list,list.length);
     }
 
     /**
@@ -269,7 +278,10 @@ public class ResizableArray {
         if (resizableArray.isEmpty()){
             throw new ArrayIndexOutOfBoundsException();
         }
-        for (int i = 0; i < list.length; i++) {
+        if (size() != resizableArray.size()){
+            return false;
+        }
+        for (int i = 0; i < size(); i++) {
             if (list[i] != resizableArray.get(i)){
                 return false;
             }
@@ -283,6 +295,7 @@ public class ResizableArray {
      * @param toIndex
      * @return
      * return true if the elements were removed, false otherwise
+     * @throws ArrayIndexOutOfBoundsException
      */
     public boolean removeRange(int fromIndex,int toIndex){
         if (fromIndex < 0 || fromIndex >= writeIndex || toIndex <= 0 || toIndex >= writeIndex || fromIndex == toIndex){
@@ -293,6 +306,28 @@ public class ResizableArray {
                 list[i] = -1;
             }
             remove(-1);
+            list = Arrays.copyOf(list,writeIndex);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Adds the elements of the given range and places the sum at the end.
+     * @param fromIndex
+     * @param toIndex
+     * @return Returns true if the elements were added successfully, false otherwise
+     */
+    public boolean addRange(int fromIndex, int toIndex){
+        if (fromIndex < 0 || fromIndex >= writeIndex || toIndex <= 0 || toIndex >= writeIndex || fromIndex == toIndex){
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        if (!isEmpty()) {
+            int sum = 0;
+            for (int i = fromIndex; i <= toIndex; i++) {
+                sum = sum + list[i];
+            }
+            add(sum);
             return true;
         }
         return false;

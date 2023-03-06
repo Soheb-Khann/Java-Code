@@ -64,7 +64,7 @@ public class ResizableArray {
      *  or if the given index is greater than or equals to size.
      */
     public int get(int index) {
-        if (index < 0 || index >= writeIndex || isEmpty()){
+        if (index < 0 || index >= writeIndex ){
             throw new ArrayIndexOutOfBoundsException();
         }
         return list[index];

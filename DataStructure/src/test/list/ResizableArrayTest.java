@@ -53,42 +53,50 @@ public class ResizableArrayTest {
         System.out.println(t2 - t1);
     }
 
-    @Test
-    public void testGet() {
-        ResizableArray list = new ResizableArray(3);
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        assertEquals(1, list.get(0));
-        assertEquals(2, list.get(1));
-        assertEquals(3, list.get(2));
-    }
-
     /**
      * Check for exception when no elements are present in the array.
      */
     @Test
     public void testGetNoElements() {
         ResizableArray list = new ResizableArray(0);
-        assertThrows(ArrayIndexOutOfBoundsException.class,
-                () -> list.get(0));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.get(0));
     }
 
     @Test
-    public void testGetIndexlessthan0() {
+    public void testGetOne() {
+        ResizableArray list = new ResizableArray(1);
+        list.add(1);
+        assertEquals(1, list.get(0));
+    }
+
+    @Test
+    public void testGetLast() {
+        ResizableArray list = new ResizableArray(1);
+        list.add(1);
+        list.add(2);
+        assertEquals(2, list.get(1));
+    }
+
+    @Test
+    public void testGetIndexLessThanZero() {
         ResizableArray list = new ResizableArray(4);
         list.add(1);
         list.add(1);
-        assertThrows(ArrayIndexOutOfBoundsException.class,
-                () -> list.get(-1));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.get(-1));
     }
 
+    @Test
+    public void testGetIndexEqualToWI() {
+        ResizableArray list = new ResizableArray(4);
+        list.add(1);
+        list.add(1);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.get(2));
+    }
     @Test
     public void testGetIndexMoreThanWI() {
         ResizableArray list = new ResizableArray(4);
         list.add(1);
         list.add(1);
-        assertThrows(ArrayIndexOutOfBoundsException.class,
-                () -> list.get(4));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.get(4));
     }
 }

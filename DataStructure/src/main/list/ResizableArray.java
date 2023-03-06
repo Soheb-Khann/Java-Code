@@ -21,9 +21,6 @@ public class ResizableArray {
         if (size < 0){
             throw new ArrayIndexOutOfBoundsException();
         }
-        if ( size > Integer.MAX_VALUE){
-            throw new NegativeArraySizeException();
-        }
         list = new int[size] ;
     }
 

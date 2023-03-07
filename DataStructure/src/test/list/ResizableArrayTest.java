@@ -107,9 +107,9 @@ public class ResizableArrayTest {
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(-1,1));
     }
     @Test
-    public void testSetEqualToWI() {
-        ResizableArray list = new ResizableArray();
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(0,1));
+    public void testSetNoElementsOrSetEqualToWI() {
+        ResizableArray list = new ResizableArray(0);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(0,4));
     }
     @Test
     public void testSetMoreThanWI() {
@@ -118,11 +118,6 @@ public class ResizableArrayTest {
         list.add(2);
         list.add(3);
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(4,1));
-    }
-    @Test
-    public void testSetNoElements() {
-        ResizableArray list = new ResizableArray(0);
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(0,4));
     }
     @Test
     public void testSetFirstIndex() {
@@ -135,6 +130,15 @@ public class ResizableArrayTest {
     public void testSetLastIndex() {
         ResizableArray list = new ResizableArray(2);
         list.add(1);
+        list.add(2);
+        list.set(1,3);
+        assertEquals(3,list.get(1));
+    }
+    @Test
+    public void testSetMiddleIndex() {
+        ResizableArray list = new ResizableArray(2);
+        list.add(1);
+        list.add(5);
         list.add(2);
         list.set(1,3);
         assertEquals(3,list.get(1));

@@ -139,6 +139,18 @@ public class ResizableArrayTest {
         assertThrows(ArrayIndexOutOfBoundsException.class, ()-> list.removeAtIndex(1));
     }
     @Test
+    public void testRemoveAtIndexLessThanZero(){
+        ResizableArray  list  = new ResizableArray();
+        assertThrows(ArrayIndexOutOfBoundsException.class, ()-> list.removeAtIndex(-1));
+    }
+    @Test
+    public void testRemoveAtIndexMoreThanWI(){
+        ResizableArray  list  = new ResizableArray();
+        list.add(1);
+        list.add(2);
+        assertThrows(ArrayIndexOutOfBoundsException.class, ()-> list.removeAtIndex(3));
+    }
+    @Test
     public void testRemoveAtIndexFirstElement(){
         ResizableArray  list  = new ResizableArray(1);
         list.add(1);
@@ -152,5 +164,16 @@ public class ResizableArrayTest {
         list.add(2);
         list.removeAtIndex(1);
         assertEquals(1,list.size());
+        assertEquals(1,list.get(0));
+    }
+    @Test
+    public void testRemoveAtIndexMiddleElement(){
+        ResizableArray  list  = new ResizableArray(2);
+        list.add(1);
+        list.add(3);
+        list.add(2);
+        list.removeAtIndex(1);
+        assertEquals(2,list.size());
+        assertEquals(2,list.get(1));
     }
 }

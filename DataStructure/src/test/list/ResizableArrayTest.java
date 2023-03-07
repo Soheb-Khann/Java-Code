@@ -1,7 +1,6 @@
 package test.list;
 import main.list.ResizableArray;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -102,14 +101,14 @@ public class ResizableArrayTest {
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.get(4));
     }
     @Test
+    public void testSetNoElementsOrSetEqualsToWI() {
+        ResizableArray list = new ResizableArray(0);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(0,4));
+    }
+    @Test
     public void testSetNegative() {
         ResizableArray list = new ResizableArray(0);
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(-1,1));
-    }
-    @Test
-    public void testSetEqualToWI() {
-        ResizableArray list = new ResizableArray();
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(0,1));
     }
     @Test
     public void testSetMoreThanWI() {
@@ -118,11 +117,6 @@ public class ResizableArrayTest {
         list.add(2);
         list.add(3);
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(4,1));
-    }
-    @Test
-    public void testSetNoElements() {
-        ResizableArray list = new ResizableArray(0);
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(0,4));
     }
     @Test
     public void testSetFirstIndex() {
@@ -138,5 +132,25 @@ public class ResizableArrayTest {
         list.add(2);
         list.set(1,3);
         assertEquals(3,list.get(1));
+    }
+    @Test
+    public void testRemoveAtIndexNoElementsOrIndexEqualsToWI(){
+        ResizableArray  list  = new ResizableArray();
+        assertThrows(ArrayIndexOutOfBoundsException.class, ()-> list.removeAtIndex(1));
+    }
+    @Test
+    public void testRemoveAtIndexFirstElement(){
+        ResizableArray  list  = new ResizableArray(1);
+        list.add(1);
+        list.removeAtIndex(0);
+       assertEquals(0,list.size());
+    }
+    @Test
+    public void testRemoveAtIndexLastElement(){
+        ResizableArray  list  = new ResizableArray(2);
+        list.add(1);
+        list.add(2);
+        list.removeAtIndex(1);
+        assertEquals(1,list.size());
     }
 }

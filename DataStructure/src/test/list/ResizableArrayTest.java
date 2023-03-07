@@ -176,4 +176,39 @@ public class ResizableArrayTest {
         assertEquals(2,list.size());
         assertEquals(2,list.get(1));
     }
+    @Test
+    public void testRemoveNotContains(){
+        ResizableArray list  = new ResizableArray(2);
+        list.add(1);
+        assertFalse(list.remove(2));
+    }
+    @Test
+    public void testRemoveNoElements(){
+        ResizableArray list  = new ResizableArray();
+        assertFalse(list.remove(2));
+    }
+    @Test
+    public void testRemoveFirstElements(){
+        ResizableArray list  = new ResizableArray(1);
+        list.add(1);
+        assertTrue(list.remove(1));
+        assertEquals(0,list.size());
+    }
+    @Test
+    public void testRemoveLastElements(){
+        ResizableArray list  = new ResizableArray(1);
+        list.add(1);
+        list.add(2);
+        assertTrue(list.remove(2));
+        assertEquals(1,list.size());
+    }
+    @Test
+    public void testRemoveMiddleElement(){
+        ResizableArray list  = new ResizableArray(1);
+        list.add(1);
+        list.add(3);
+        list.add(2);
+        assertTrue(list.remove(3));
+        assertEquals(2,list.size());
+    }
 }

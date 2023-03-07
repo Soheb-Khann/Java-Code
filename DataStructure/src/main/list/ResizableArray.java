@@ -2,7 +2,7 @@ package main.list;
 
 import java.util.Arrays;
 
-/**
+/*
  * Represents a resizable array of integer elements.
  * @author Soheb Khan
  */
@@ -79,7 +79,7 @@ public class ResizableArray {
      *  or if the given index is greater than or equals to size.
      */
     public void set(int index, int num)  {
-        if (index < 0 || index >= writeIndex || isEmpty()){
+        if (index < 0 || index >= writeIndex ){
             throw new ArrayIndexOutOfBoundsException();
         }
         list[index] = num;

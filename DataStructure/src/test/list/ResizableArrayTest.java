@@ -1,6 +1,8 @@
 package test.list;
 import main.list.ResizableArray;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ResizableArrayTest {
@@ -63,7 +65,7 @@ public class ResizableArrayTest {
     }
 
     @Test
-    public void testGetOne() {
+    public void testGetFirst() {
         ResizableArray list = new ResizableArray(1);
         list.add(1);
         assertEquals(1, list.get(0));
@@ -98,5 +100,43 @@ public class ResizableArrayTest {
         list.add(1);
         list.add(1);
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.get(4));
+    }
+    @Test
+    public void testSetNegative() {
+        ResizableArray list = new ResizableArray(0);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(-1,1));
+    }
+    @Test
+    public void testSetEqualToWI() {
+        ResizableArray list = new ResizableArray();
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(0,1));
+    }
+    @Test
+    public void testSetMoreThanWI() {
+        ResizableArray list = new ResizableArray();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(4,1));
+    }
+    @Test
+    public void testSetNoElements() {
+        ResizableArray list = new ResizableArray(0);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> list.set(0,4));
+    }
+    @Test
+    public void testSetFirstIndex() {
+        ResizableArray list = new ResizableArray(2);
+        list.add(1);
+        list.set(0,2);
+        assertEquals(2,list.get(0));
+    }
+    @Test
+    public void testSetLastIndex() {
+        ResizableArray list = new ResizableArray(2);
+        list.add(1);
+        list.add(2);
+        list.set(1,3);
+        assertEquals(3,list.get(1));
     }
 }

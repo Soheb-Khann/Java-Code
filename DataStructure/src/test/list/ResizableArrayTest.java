@@ -43,10 +43,9 @@ public class ResizableArrayTest {
                 list.add(Math.toIntExact(i));
             } catch (OutOfMemoryError e) {
                 System.out.println("Error : " + i);
-                System.out.println(i * 2 > Integer.MAX_VALUE);
+                System.out.println(i * 2 >= Integer.MAX_VALUE);
                 break;
             }
-
         }
         long t2 = System.currentTimeMillis();
         System.out.println(t2 - t1);
@@ -150,6 +149,40 @@ public class ResizableArrayTest {
         a2.add(5);
         a2.addAll(a1);
         assertEquals(5,a2.size());
+    }
+    @Test
+    public void testRemoveAll(){
+        ResizableArray a1 = new ResizableArray(4);
+        ResizableArray a2 = new ResizableArray(2);
+        a1.add(1);
+        a1.add(2);
+        a1.add(3);
+        a1.add(4);
+        /////////
+        a2.add(1);
+        a2.add(3);
+        /////////
+        a1.removeAll(a2);
+        assertFalse(a1.contains(1));
+        assertFalse(a1.contains(3));
+    }
+    /**
+     * Check for size shrink after removing
+     */
+    @Test
+    public void testRemoveAllSize(){
+        ResizableArray a1 = new ResizableArray(4);
+        ResizableArray a2 = new ResizableArray(2);
+        a1.add(1);
+        a1.add(2);
+        a1.add(3);
+        a1.add(4);
+        /////////
+        a2.add(1);
+        a2.add(3);
+        /////////
+        a1.removeAll(a2);
+        assertEquals(2,a1.size());
     }
     @Test
     public void testRetainAll(){

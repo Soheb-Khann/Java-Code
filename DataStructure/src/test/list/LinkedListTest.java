@@ -64,6 +64,50 @@ public class LinkedListTest {
         System.out.println(l.toString());
     }
 
+    @Test
+    public void testRemove() {
+        LinkedList l = new LinkedList();
+        assertThrows(NoSuchElementException.class, () -> l.remove(2));
+    }
+
+    @Test
+    public void testRemoveOne() {
+        LinkedList l = new LinkedList();
+        l.add(1);
+        System.out.println(l.toString());
+        l.remove(1);
+        assertThrows(NoSuchElementException.class, () -> l.get(0));
+    }
+
+    @Test
+    public void testRemoveTwo() {
+        LinkedList l = new LinkedList();
+        l.add(1);
+        l.add(2);
+        System.out.println(l.toString());
+        l.remove(1);
+        System.out.println(l.toString());
+        assertEquals(2, l.get(0));
+        l.remove(2);
+        assertThrows(NoSuchElementException.class, () -> l.get(0));
+    }
+
+    @Test
+    public void testRemoveThree() {
+        LinkedList l = new LinkedList();
+        l.add(1);
+        l.add(2);
+        l.add(3);
+        System.out.println(l.toString());
+        l.remove(1);
+        System.out.println(l.toString());
+        assertEquals(2, l.get(0));
+        l.remove(2);
+        System.out.println(l.toString());
+        assertEquals(3, l.get(0));
+        l.remove(3);
+        assertThrows(NoSuchElementException.class, () -> l.remove(3));
+    }
 
     @Test
     public void testSet() {

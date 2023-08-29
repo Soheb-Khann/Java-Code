@@ -115,6 +115,54 @@ public class LinkedList {
         lastNode = temp;
         size++;
     }
+
+    /**
+     * Removes the given element from the list
+     *
+     * @param n
+     */
+    public void remove(int n) {
+        if (isEmpty()) throw new NoSuchElementException();
+        if (size == 1) {
+            if (head.data == n) {
+                head = new Node(0);
+                lastNode = null;
+                size = 0;
+                return;
+            }
+        } else if (size == 2) {
+            if (head.data == n) {
+                head = head.next;
+                size--;
+            } else if (lastNode.data == n) {
+                lastNode = head;
+                size--;
+            }
+            return;
+        } else if (head.data == n) {
+            head = head.next;
+            size--;
+        } else if (lastNode.data == n) {
+            Node temp = head.next;
+            while (temp.next != lastNode) {
+                temp = temp.next;
+            }
+            lastNode = temp;
+            lastNode.next = null;
+            size--;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) {
+            if (temp.next.data == n) {
+                temp.next = temp.next.next;
+                size--;
+                return;
+            }
+            temp = temp.next;
+        }
+    }
+
     /**
      * Returns the element at the given index.
      *

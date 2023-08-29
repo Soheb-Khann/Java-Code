@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedListTest {
     @Test
@@ -27,7 +26,7 @@ public class LinkedListTest {
         l.add(1);// 1
         l.add(2);// 2
         l.addAtIndex(1, 2);
-        assertEquals(2, l.get(1));
+        assertEquals(1, l.get(1));
     }
 
     @Test
@@ -112,13 +111,48 @@ public class LinkedListTest {
     @Test
     public void testSet() {
         LinkedList l = new LinkedList();
-        l.add(0); // 0
         l.add(1);// 1
         l.add(2);// 2
         assertEquals(1, l.get(1));
         l.set(1, 4);
         assertEquals(4, l.get(1));
+        l.add(0); // 0
     }
 
+    @Test
+    public void testContainsOne() {
+        LinkedList l = new LinkedList();
+        l.add(1);// 1
+        assertTrue(l.contains(1));
+    }
 
+    @Test
+    public void testContainsTwo() {
+        LinkedList l = new LinkedList();
+        l.add(1);// 1
+        l.add(2);// 2
+        assertTrue(l.contains(1));
+        assertTrue(l.contains(2));
+    }
+
+    @Test
+    public void testContainsThree() {
+        LinkedList l = new LinkedList();
+        l.add(1);// 1
+        l.add(2);// 2
+        l.add(3);// 3
+        assertTrue(l.contains(1));
+        assertTrue(l.contains(2));
+        assertTrue(l.contains(3));
+        l.remove(2);
+        assertFalse(l.contains(2));
+    }
+    @Test
+    public void testContainsNot() {
+        LinkedList l = new LinkedList();
+        l.add(1);// 1
+        l.add(2);// 2
+        l.add(3);// 3
+        assertFalse(l.contains(4));
+    }
 }

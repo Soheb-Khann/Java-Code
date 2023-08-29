@@ -113,6 +113,7 @@ public class ResizableArray {
             list[j] = list[j + 1];
         }
         --writeIndex;
+        resize();
         return removedElement;
     }
 
@@ -134,7 +135,14 @@ public class ResizableArray {
             }
         }
         writeIndex = j - 1;
+        resize();
         return flag;
+    }
+
+    private void resize() {
+        if (writeIndex + 1 == list.length / 4) {        // Loitering control
+            list = Arrays.copyOf(list, list.length / 2);
+        }
     }
 
     private void swap(int i, int j) {

@@ -74,7 +74,7 @@ public class LinkedList {
         }
         Node temp = head.next;
         int i = 1;
-        while (i != index - 1) {
+        while (i != index) {
             temp = temp.next;
             i++;
         }
@@ -174,7 +174,7 @@ public class LinkedList {
         if (isEmpty()) throw new NoSuchElementException();
         else if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
         else if (index == 0) return head.data;
-        else if (index == size) return lastNode.data;
+        else if (index == size - 1) return lastNode.data;
         int i = 1;
         Node temp = head.next;
         while (i != index) {
@@ -251,8 +251,13 @@ public class LinkedList {
         return size == 0;
     }
 
-    public void contains(int n) {
-
+    public boolean contains(int n) {
+        if (head.data == n) return true;
+        else if (lastNode.data == n) return true;
+        for (Node temp = head; temp != lastNode; temp = temp.next) {
+            if (temp.data == n) return true;
+        }
+        return false;
     }
 
 

@@ -167,7 +167,7 @@ public class LinkedListTest {
         LinkedList l = new LinkedList();
         l.add(1);// 1
         l.add(2);// 2
-        assertEquals(1, l.get(1));
+        assertEquals(2, l.get(1));
         l.set(1, 4);
         assertEquals(4, l.get(1));
         l.add(0); // 0
@@ -209,5 +209,66 @@ public class LinkedListTest {
         l.add(2);// 2
         l.add(3);// 3
         assertFalse(l.contains(4));
+    }
+
+    @Test
+    public void testAddAllEmptyList() {
+        LinkedList l1 = new LinkedList();
+        LinkedList l2 = new LinkedList();
+        l2.add(1);// 1
+        l2.add(2);// 2
+        l2.add(3);// 3
+        l1.printList();
+        l2.printList();
+        l1.addAll(l2);
+        l1.printList();
+    }
+
+    @Test
+    public void testAddAllOneElement() {
+        LinkedList l1 = new LinkedList();
+        LinkedList l2 = new LinkedList();
+        l2.add(1);// 1
+        l2.add(2);// 2
+        l2.add(3);// 3
+        //////////////
+        l1.add(1);//
+        l1.printList();
+        l2.printList();
+        l1.addAll(l2);
+        l1.printList();
+    }
+
+    @Test
+    public void testAddAllTwoElements() {
+        LinkedList l1 = new LinkedList();
+        LinkedList l2 = new LinkedList();
+        l2.add(1);// 1
+        l2.add(2);// 2
+        l2.add(3);// 3
+        //////////////
+        l1.add(1);//
+        l1.add(2);//
+        l1.printList();
+        l2.printList();
+        l1.addAll(l2);
+        l1.printList();
+    }
+
+    @Test
+    public void testAddAllThreeElements() {
+        LinkedList l1 = new LinkedList();
+        LinkedList l2 = new LinkedList();
+        l2.add(1);// 1
+        l2.add(2);// 2
+        l2.add(3);// 3
+        //////////////
+        l1.add(1);//
+        l1.add(2);//
+        l1.add(3);//
+        l1.printList();
+        l2.printList();
+        l1.addAll(l2);
+        l1.printList();
     }
 }

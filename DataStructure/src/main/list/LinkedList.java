@@ -46,12 +46,11 @@ public class LinkedList {
             head.data = n;
             lastNode = head;
             size++;
-            return true;
+            return;
         }
         lastNode.next = new Node(n);
         lastNode = lastNode.next;
         size++;
-        return true;
     }
 
     /**
@@ -258,7 +257,7 @@ public class LinkedList {
      * @throws IndexOutOfBoundsException If index is invalid.
      */
     public void set(int index, int n) {
-        if (index < 0 || index >= size - 1) throw new IndexOutOfBoundsException();
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
         else if (index == 0) head.data = n;
         else if (index == size - 1) lastNode.data = n;
         Node temp = head;
@@ -292,6 +291,21 @@ public class LinkedList {
         }
     }
 
+    /**
+     * Adds all the element of the given list at the end of the current list
+     */
+    public void addAll(LinkedList l) {
+        if (l.isEmpty()) {
+            System.out.println("Given list is empty");
+            return;
+        }
+        int[] a = l.toArray();
+        if (isEmpty()) {
+            for (int e : a) add(e);
+            return;
+        }
+        for (int e : a) addLast(e);
+    }
 
     /**
      * Return true if the list is empty otherwise false

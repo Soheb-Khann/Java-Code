@@ -41,7 +41,7 @@ public class LinkedList {
      *
      * @param n
      */
-    public boolean add(int n) {
+    public void add(int n) {
         if (isEmpty()) {
             head.data = n;
             lastNode = head;
@@ -164,6 +164,51 @@ public class LinkedList {
     }
 
     /**
+     * Removes element at the given index.
+     *
+     * @param index
+     * @throws NoSuchElementException    if the list is empty
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    public void removeAtIndex(int index) {
+        if (isEmpty()) throw new NoSuchElementException();
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+        if (index == 0) {
+            if (size == 1) {
+                head = new Node(0);
+                lastNode = null;
+                size = 0;
+                return;
+            } else {
+                head = head.next;
+                size--;
+                return;
+            }
+        }
+        if (index == size - 1) {
+            if (size == 2) {
+                lastNode = head;
+                lastNode.next = null;
+                size = 1;
+            } else {
+                Node temp = head;
+                while (temp.next != lastNode) temp = temp.next;
+                lastNode = temp;
+                lastNode.next = null;
+                size--;
+            }
+            return;
+        }
+        int n = 0;
+        Node temp = head;
+        for (; n != index - 1; temp = temp.next) {
+            n++;
+        }
+        temp.next = temp.next.next;
+        size--;
+    }
+
+    /**
      * Returns the element at the given index.
      *
      * @param index
@@ -247,11 +292,25 @@ public class LinkedList {
         }
     }
 
+
+    /**
+     * Return true if the list is empty otherwise false
+     *
+     * @return
+     */
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Returns true if the given element is present in the list otherwise false
+     *
+     * @param n
+     * @return
+     * @throws NoSuchElementException If the list is empty.
+     */
     public boolean contains(int n) {
+        if (isEmpty()) throw new NoSuchElementException();
         if (head.data == n) return true;
         else if (lastNode.data == n) return true;
         for (Node temp = head; temp != lastNode; temp = temp.next) {
@@ -260,16 +319,11 @@ public class LinkedList {
         return false;
     }
 
-
-    public void indexOf(int n) {
-
-    }
-
-    public void lastIndexOf(int n) {
-
-    }
-
-
+    /**
+     * Returns the size of the list
+     *
+     * @return
+     */
     public int size() {
         return size;
     }
@@ -296,6 +350,13 @@ public class LinkedList {
      */
     public String toString() {
         return Arrays.toString(toArray());
+    }
+
+    /**
+     * Prints the list
+     */
+    public void printList() {
+        System.out.println(toString());
     }
 
     public static void main(String[] args) {

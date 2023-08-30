@@ -60,7 +60,7 @@ public class LinkedListTest {
         l.addLast(-1);
         assertEquals(-1, l.getLast());
         assertEquals(2, l.get(l.size() - 2));
-        System.out.println(l.toString());
+        l.printList();
     }
 
     @Test
@@ -73,7 +73,7 @@ public class LinkedListTest {
     public void testRemoveOne() {
         LinkedList l = new LinkedList();
         l.add(1);
-        System.out.println(l.toString());
+        l.printList();
         l.remove(1);
         assertThrows(NoSuchElementException.class, () -> l.get(0));
     }
@@ -83,9 +83,9 @@ public class LinkedListTest {
         LinkedList l = new LinkedList();
         l.add(1);
         l.add(2);
-        System.out.println(l.toString());
+        l.printList();
         l.remove(1);
-        System.out.println(l.toString());
+        l.printList();
         assertEquals(2, l.get(0));
         l.remove(2);
         assertThrows(NoSuchElementException.class, () -> l.get(0));
@@ -97,15 +97,69 @@ public class LinkedListTest {
         l.add(1);
         l.add(2);
         l.add(3);
-        System.out.println(l.toString());
+        l.printList();
         l.remove(1);
-        System.out.println(l.toString());
+        l.printList();
         assertEquals(2, l.get(0));
         l.remove(2);
-        System.out.println(l.toString());
+        l.printList();
         assertEquals(3, l.get(0));
         l.remove(3);
         assertThrows(NoSuchElementException.class, () -> l.remove(3));
+    }
+
+    @Test
+    public void testRemoveAtIndexOne() {
+        LinkedList l = new LinkedList();
+        l.add(1);
+        l.printList();
+        l.removeAtIndex(0);
+        l.printList();
+    }
+
+    @Test
+    public void testRemoveAtIndexTwo() {
+        LinkedList l = new LinkedList();
+        l.add(1);
+        l.add(2);
+        l.printList();
+        l.removeAtIndex(1);
+        l.printList();
+        l.removeAtIndex(0);
+        l.printList();
+    }
+
+    @Test
+    public void testRemoveAtIndexThree() {
+        LinkedList l = new LinkedList();
+        l.add(1);
+        l.add(2);
+        l.add(3);
+        l.printList();
+        l.removeAtIndex(1);
+        l.printList();
+        l.removeAtIndex(0);
+        l.printList();
+        l.removeAtIndex(0);
+        l.printList();
+    }
+
+    @Test
+    public void testRemoveAtIndexFour() {
+        LinkedList l = new LinkedList();
+        l.add(1);
+        l.add(2);
+        l.add(3);
+        l.add(4);
+        l.printList();
+        l.removeAtIndex(3);
+        l.printList();
+        l.removeAtIndex(0);
+        l.printList();
+        l.removeAtIndex(1);
+        l.printList();
+        l.removeAtIndex(0);
+        l.printList();
     }
 
     @Test
@@ -147,6 +201,7 @@ public class LinkedListTest {
         l.remove(2);
         assertFalse(l.contains(2));
     }
+
     @Test
     public void testContainsNot() {
         LinkedList l = new LinkedList();

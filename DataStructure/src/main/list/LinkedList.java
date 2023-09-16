@@ -31,7 +31,7 @@ public class LinkedList {
      * Constructs a linked list of size 1.
      */
     public LinkedList() {
-        head = new Node(0);
+        head = new Node(0);  // correct it
         lastNode = null;
         size = 0;
     }
@@ -62,7 +62,6 @@ public class LinkedList {
      */
     public void addAtIndex(int index, int n) {
         if (index < 0 || index > size) throw new IndexOutOfBoundsException();
-        Node a = new Node(n);
         if (index == 0) {
             addFirst(n);
             return;
@@ -77,6 +76,7 @@ public class LinkedList {
             temp = temp.next;
             i++;
         }
+        Node a = new Node(n);
         a.next = temp.next;
         temp.next = a;
         size++;
@@ -272,10 +272,10 @@ public class LinkedList {
     /**
      * Clears the linked list
      */
-    public void clear() {
+    public void clear() { // Inefficient method
         if (size == 0) return;
         else if (size == 1) {
-            head = new Node(0);
+            head = new Node(0); // correct
             lastNode = null;
             size = 0;
             return;
@@ -299,7 +299,7 @@ public class LinkedList {
             System.out.println("Given list is empty");
             return;
         }
-        int[] a = l.toArray();
+        int[] a = l.toArray();  // traverse the list
         if (isEmpty()) {
             for (int e : a) add(e);
             return;
@@ -369,7 +369,7 @@ public class LinkedList {
     /**
      * Prints the list
      */
-    public void printList() {
+    public void printList() {  // 1 - 2 - null
         System.out.println(toString());
     }
 

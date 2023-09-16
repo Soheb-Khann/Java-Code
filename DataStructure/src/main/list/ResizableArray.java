@@ -109,9 +109,10 @@ public class ResizableArray {
             throw new ArrayIndexOutOfBoundsException();
         }
         int removedElement = list[index];
-        for (int j = index; j < writeIndex; j++) {
-            list[j] = list[j + 1];
-        }
+//        for (int j = index; j < writeIndex; j++) {
+//            list[j] = list[j + 1];
+//        }
+        list[index] = list[writeIndex];
         --writeIndex;
         resize();
         return removedElement;

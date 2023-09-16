@@ -4,9 +4,17 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Represents a generic linked list.
+ *
+ * @author Soheb Khan
+ */
 public class SinglyLinkedList<Item> implements Iterable<Item> {
     private Node first = null;
 
+    /**
+     * Represents a node in the list.
+     */
     private class Node {
         Item data;
         Node next;
@@ -17,7 +25,12 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         }
     }
 
-    public void add(Item n) {
+    /**
+     * Adds an element at the end of the list.
+     *
+     * @param n
+     */
+    public void addFirst(Item n) {
         if (isEmpty()) {
             first = new Node(n);
             return;
@@ -27,13 +40,23 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         first.next = oldFirst;
     }
 
-    public void addFirst(Item n) {
+    /**
+     * Adds the element at first position.
+     *
+     * @param n
+     */
+    public void addLast(Item n) {
         add(n);
     }
 
-    public void addLast(Item n) {
+    /**
+     * Adds the element at the last position.
+     *
+     * @param n
+     */
+    public void add(Item n) {
         if (isEmpty()) {
-            add(n);
+            first = new Node(n);
             return;
         }
         Node temp = first;
@@ -42,10 +65,17 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         temp.next = new Node(n);
     }
 
-    public void addAtIndex(int index, Item n) { // can add dummyHead technique
+    /**
+     * Adda an element at the specified index.
+     *
+     * @param index
+     * @param n
+     * @throws IndexOutOfBoundsException If index is invalid.
+     */
+    public void addAtIndex(int index, Item n) {
         if (index < 0) throw new IndexOutOfBoundsException();
         else if (index == 0) {
-            add(n);
+            addFirst(n);
             return;
         } else if (isEmpty() && index > 0) {
             System.out.println("List is empty");
@@ -63,29 +93,39 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         newNode.next = prevTarget.next;
         prevTarget.next = newNode;
     }
-// [0] (0,1) (1,1) , [0,1] (0,1) (1,1) (2,1) , [0,1,2] (0,1) (1,1) (2,1) (3,1)
-    public void addAtIndexV2(int index, Item n){
-        if(index < 0) throw new IllegalArgumentException();
+
+    public void addAtIndexV2(int index, Item n) {
+        if (index < 0) throw new IllegalArgumentException();
         Node dummyHead = new Node(null);
         dummyHead.next = first;
         Node prev = dummyHead;
         Node current = first;
         int i = 0;
-        while (current != null && i < index ){
+        while (current != null && i < index) {
             prev = current;
             current = current.next;
             i++;
         }
-        if(i < index ) throw new IndexOutOfBoundsException();
+        if (i < index) throw new IndexOutOfBoundsException();
         prev.next = new Node(n);
         prev.next.next = current;
         first = dummyHead.next;
     }
 
+    /**
+     * Returns the first element.
+     *
+     * @return
+     */
     public Item getFirst() {
         return first.data;
     }
 
+    /**
+     * Returns the last element.
+     *
+     * @return
+     */
     public Item getLast() {
         if (isEmpty())
             throw new NoSuchElementException();
@@ -95,6 +135,13 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         return temp.data;
     }
 
+    /**
+     * Returns the element at the given index.
+     *
+     * @param index
+     * @return
+     * @throws IndexOutOfBoundsException If index is invalid
+     */
     public Item get(int index) {
         if (index < 0 || isEmpty())
             throw new NoSuchElementException();
@@ -102,6 +149,13 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         return target.data;
     }
 
+    /**
+     * Sets the given element at the given index.
+     *
+     * @param index
+     * @param n
+     * @throws IndexOutOfBoundsException If index is invalid.
+     */
     public void set(int index, Item n) {
         if (index < 0 || isEmpty())
             throw new IndexOutOfBoundsException();
@@ -119,6 +173,11 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         return target;
     }
 
+    /**
+     * Removes the given element from the list
+     *
+     * @param n
+     */
     public void remove(Item n) {
         if (isEmpty())
             throw new IllegalStateException();
@@ -179,6 +238,13 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
 
     }
 
+    /**
+     * Removes element at the given index.
+     *
+     * @param index
+     * @throws NoSuchElementException    if the list is empty
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
     public void removeAtIndex(int index) {
         if (isEmpty() || index < 0)
             throw new IndexOutOfBoundsException();
@@ -197,6 +263,13 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         prevTarget.next = prevTarget.next.next;
     }
 
+    /**
+     * Returns true if the given element is present in the list otherwise false
+     *
+     * @param n
+     * @return
+     * @throws NoSuchElementException If the list is empty.
+     */
     public boolean contains(Item n) {
         if (isEmpty())
             return false;
@@ -208,6 +281,12 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         }
         return false;
     }
+
+    /**
+     * Returns the size of the list
+     *
+     * @return
+     */
 
     public int size() {
         if (isEmpty())
@@ -221,19 +300,27 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         return i;
     }
 
+    /**
+     * Returns an array containing linked list elements.
+     *
+     * @return
+     */
     public Item[] toArray() {
-        if (isEmpty())
-            throw new NoSuchElementException();
+        if (isEmpty()) throw new NoSuchElementException();
         Item[] a = (Item[]) new Object[10];
         int i = 0;
         for (Node target = first; target != null; target = target.next) {
-            if (i + 1 == a.length)
-                a = Arrays.copyOf(a, a.length * 2);
+            if (i + 1 == a.length) a = Arrays.copyOf(a, a.length * 2);
             a[i++] = target.data;
         }
         return a;
     }
 
+    /**
+     * Returns the linked list in string form.
+     *
+     * @return
+     */
     public String toString() {
         if (isEmpty())
             return "";
@@ -244,9 +331,12 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         return str;
     }
 
+    /**
+     * Adds all the element of the given list at the end of the current list
+     */
     public void addAll(SinglyLinkedList<Item> l) {
         for (Item item : l)
-            addLast(item);
+            add(item);
     }
 
     public void addAll(SinglyLinkedList<Item> l, int index) {
@@ -292,21 +382,32 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
         int i = fromIndex;
         while (i != toIndex) {
             if (temp == null) break;              // IndexOutOfBoundException
-            sub.addLast(temp.data);
+            sub.add(temp.data);
             temp = temp.next;
             i++;
         }
         return sub;
     }
 
+    /**
+     * Clears the linked list
+     */
     public void clear() {
         first = null;
     }
 
+    /**
+     * Return true if the list is empty otherwise false
+     *
+     * @return
+     */
     public boolean isEmpty() {
         return first == null;
     }
 
+    /**
+     * Prints the list
+     */
     public void printList() {
         Node temp = first;
         while (temp != null) {

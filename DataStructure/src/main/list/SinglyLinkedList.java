@@ -409,12 +409,12 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
      * Prints the list
      */
     public void printList() {
-        Node temp = first;
-        while (temp != null) {
-            System.out.print(temp.data + " - ");
-            temp = temp.next;
+        Node curr = first;
+        while (curr.next != null) {
+            System.out.print(curr.data+", ");
+            curr = curr.next;
         }
-        System.out.println();
+        System.out.print(curr.data);
     }
 
     public Iterator<Item> iterator() {

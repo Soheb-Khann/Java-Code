@@ -1,5 +1,6 @@
 package main.list;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -236,6 +237,16 @@ public class DoublyLinkedList<Item> implements List<Item> {
 
     @Override
     public boolean contains(Item item) {
+        if(first.val == item || last.val == item) return true;
+        Node curr = first;
+        Node lcurr = last;
+        while (curr != lcurr) {
+            if (curr.val == item) return true;
+            else if (lcurr.val == item) return true;
+            curr = curr.next;
+            lcurr = lcurr.prev;
+        }
+        if (curr != null && curr.val == item) return true;
         return false;
     }
 
@@ -292,7 +303,26 @@ public class DoublyLinkedList<Item> implements List<Item> {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Item [] arr = (Item[]) new Object[10];
+        Node curr = first;
+        int i = 0;
+        while (curr!= null){
+            if (i + 1 == arr.length)arr = Arrays.copyOf(arr,i*2);
+            arr[i++] = curr.val;
+            curr = curr.next;
+        }
+
+        return arr;
+    }
+
+    public String  toString(){
+        if (isEmpty())
+            return "";
+        StringBuilder str = new StringBuilder(" ");
+        for (Node temp = first; temp != null; temp = temp.next) {
+            str.append(temp.val);
+        }
+        return str.toString();
     }
 
     /**

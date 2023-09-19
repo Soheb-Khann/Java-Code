@@ -3,6 +3,7 @@ package test.list;
 import main.list.DoublyLinkedList;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -378,8 +379,8 @@ public class DoublyLinkedListTest {
         assertEquals(1, l.get(1));
         assertEquals(2, l.getLast());
         l.removeAtIndex(0);
-        assertEquals(1,l.getFirst());
-        assertEquals(2,l.getLast());
+        assertEquals(1, l.getFirst());
+        assertEquals(2, l.getLast());
         DoublyLinkedList<Integer> l2 = new DoublyLinkedList<>();
         l2.add(0);
         l2.add(1);
@@ -388,8 +389,8 @@ public class DoublyLinkedListTest {
         assertEquals(1, l2.get(1));
         assertEquals(2, l2.getLast());
         l2.removeAtIndex(1);
-        assertEquals(0,l2.getFirst());
-        assertEquals(2,l2.getLast());
+        assertEquals(0, l2.getFirst());
+        assertEquals(2, l2.getLast());
         DoublyLinkedList<Integer> l3 = new DoublyLinkedList<>();
         l3.add(0);
         l3.add(1);
@@ -398,8 +399,68 @@ public class DoublyLinkedListTest {
         assertEquals(1, l3.get(1));
         assertEquals(2, l3.getLast());
         l3.removeAtIndex(2);
-        assertEquals(0,l3.getFirst());
-        assertEquals(1,l3.getLast());
+        assertEquals(0, l3.getFirst());
+        assertEquals(1, l3.getLast());
+    }
+
+    @Test
+    public void testContainsZero() {
+        DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+        assertFalse(l.contains(1));
+    }
+
+    //[0] (0) (...)
+    @Test
+    public void testContainsSizeOne() {
+        DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+        l.add(0);
+        assertEquals(0, l.getFirst());
+        assertTrue(l.contains(0));
+        assertFalse(l.contains(1));
+    }
+    // [0,1] (0) (1) (...)
+    @Test
+    public void testContainsSizeTwo() {
+        DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+        l.add(0);
+        l.add(1);
+        assertEquals(0, l.getFirst());
+        assertEquals(1, l.getLast());
+        assertTrue(l.contains(0));
+        assertTrue(l.contains(1));
+        assertFalse(l.contains(2));
+    }
+    // [0,1,2] (0) (1) (2) (...)
+    @Test
+    public void testContainsSizeThree() {
+        DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+        l.add(0);
+        l.add(1);
+        l.add(2);
+        assertEquals(0, l.getFirst());
+        assertEquals(1, l.get(1));
+        assertEquals(2, l.getLast());
+        assertTrue(l.contains(0));
+        assertTrue(l.contains(1));
+        assertTrue(l.contains(2));
+        assertFalse(l.contains(3));
+    }
+
+    @Test
+    public void testToArray(){
+        DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+        l.add(0);
+        l.add(1);
+        l.add(2);
+        System.out.println(Arrays.toString((l.toArray())));
+    }
+    @Test
+    public void testToString(){
+        DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+        l.add(0);
+        l.add(1);
+        l.add(2);
+        System.out.println(l.toString());
     }
 
 }

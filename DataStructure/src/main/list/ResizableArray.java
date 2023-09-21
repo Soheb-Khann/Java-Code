@@ -197,8 +197,8 @@ public class ResizableArray {
      * Removes all the elements but keeps the current capacity of the array.
      */
     public void clear() {
-                list = new int[list.length]; // this can be removed
-                writeIndex = -1;
+        list = new int[list.length]; // this can be removed
+        writeIndex = -1;
     }
 
     /**
@@ -280,106 +280,107 @@ public class ResizableArray {
     public boolean containsAll(ResizableArray resizableArray) {
         for (int i = 0; i < resizableArray.size(); i++) {
             if (resizableArray.get(i) == resizableArray.get(i - 1)) {
-                        continue;
-                    }
-                    if (!contains(resizableArray.get(i))) {
-                        return false;
-                    }
-                }
-                return true;
+                continue;
             }
-
-            /**
-             * Gives array that have element of resizable array
-             *
-             * @return array variable
-             */
-            public int[] toArray () {
-                return Arrays.copyOf(list, list.length);
-            }
-
-            /**
-             * Checks whether the given Resizablearray is identical to the current Resizablearray.
-             *
-             * @param resizableArray
-             * @return true when identical and false otherwise.
-             */
-            public boolean equals (ResizableArray resizableArray){
-                if (writeIndex + 1 != resizableArray.size()) {
-                    return false;
-                }
-                for (int i = 0; i < writeIndex + 1; i++) {
-                    if (list[i] != resizableArray.get(i)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-
-            /**
-             * Removes the given range of element.
-             * @param fromIndex
-             * @param toIndex
-             * @return return true if the elements were removed, false otherwise
-             * @throws ArrayIndexOutOfBoundsException
-             */
-            public boolean removeRange ( int fromIndex, int toIndex){
-                if (fromIndex < 0 || fromIndex > writeIndex || toIndex <= 0 || toIndex > writeIndex || fromIndex == toIndex) {
-                    throw new ArrayIndexOutOfBoundsException();
-                }
-                if (!isEmpty()) {
-                    for (int i = fromIndex; i < toIndex; i++) {
-                        list[i] = -1;
-                    }
-                    remove(-1);
-                    list = Arrays.copyOf(list, writeIndex + 1);
-                    return true;
-                }
+            if (!contains(resizableArray.get(i))) {
                 return false;
-            }
-
-            /**
-             * Adds the elements of the given range and places the sum at the end.
-             *
-             * @param fromIndex
-             * @param toIndex
-             * @return Return=s true if the elements were added successfully, false otherwise
-             */
-            public boolean addRange ( int fromIndex, int toIndex){
-                if (fromIndex < 0 || fromIndex > writeIndex || toIndex <= 0 || toIndex > writeIndex || fromIndex == toIndex) {
-                    throw new ArrayIndexOutOfBoundsException();
-                }
-                if (!isEmpty()) {
-                    int sum = 0;
-                    for (int i = fromIndex; i <= toIndex; i++) {
-                        sum = sum + list[i];
-                    }
-                    add(sum);
-                    return true;
-                }
-                return false;
-            }
-
-            /**
-             * Returns ResizableArray containing elements within a sub range of current ResizableArray.
-             *
-             * @param fromIndex
-             * @param toIndex
-             * @throws IllegalArgumentException  If the argument range is wrong.
-             * @throws IndexOutOfBoundsException If any one of the indices are out of range.
-             */
-            public ResizableArray subList ( int fromIndex, int toIndex){
-                if (fromIndex == toIndex) return new ResizableArray(0);
-                if (fromIndex > toIndex) {
-                    throw new IllegalArgumentException();
-                }
-                if (fromIndex > (writeIndex + 1) || toIndex > (writeIndex + 1)) {
-                    throw new IndexOutOfBoundsException();
-                }
-                ResizableArray sub = new ResizableArray((toIndex - fromIndex));
-                for (int i = fromIndex; i < toIndex; i++) {
-                    sub.add(get(i));
-                }
-                return sub;
             }
         }
+        return true;
+    }
+
+    /**
+     * Gives array that have element of resizable array
+     *
+     * @return array variable
+     */
+    public int[] toArray() {
+        return Arrays.copyOf(list, list.length);
+    }
+
+    /**
+     * Checks whether the given Resizablearray is identical to the current Resizablearray.
+     *
+     * @param resizableArray
+     * @return true when identical and false otherwise.
+     */
+    public boolean equals(ResizableArray resizableArray) {
+        if (writeIndex + 1 != resizableArray.size()) {
+            return false;
+        }
+        for (int i = 0; i < writeIndex + 1; i++) {
+            if (list[i] != resizableArray.get(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Removes the given range of element.
+     *
+     * @param fromIndex
+     * @param toIndex
+     * @return return true if the elements were removed, false otherwise
+     * @throws ArrayIndexOutOfBoundsException
+     */
+    public boolean removeRange(int fromIndex, int toIndex) {
+        if (fromIndex < 0 || fromIndex > writeIndex || toIndex <= 0 || toIndex > writeIndex || fromIndex == toIndex) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        if (!isEmpty()) {
+            for (int i = fromIndex; i < toIndex; i++) {
+                list[i] = -1;
+            }
+            remove(-1);
+            list = Arrays.copyOf(list, writeIndex + 1);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Adds the elements of the given range and places the sum at the end.
+     *
+     * @param fromIndex
+     * @param toIndex
+     * @return Return=s true if the elements were added successfully, false otherwise
+     */
+    public boolean addRange(int fromIndex, int toIndex) {
+        if (fromIndex < 0 || fromIndex > writeIndex || toIndex <= 0 || toIndex > writeIndex || fromIndex == toIndex) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        if (!isEmpty()) {
+            int sum = 0;
+            for (int i = fromIndex; i <= toIndex; i++) {
+                sum = sum + list[i];
+            }
+            add(sum);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns ResizableArray containing elements within a sub range of current ResizableArray.
+     *
+     * @param fromIndex
+     * @param toIndex
+     * @throws IllegalArgumentException  If the argument range is wrong.
+     * @throws IndexOutOfBoundsException If any one of the indices are out of range.
+     */
+    public ResizableArray subList(int fromIndex, int toIndex) {
+        if (fromIndex == toIndex) return new ResizableArray(0);
+        if (fromIndex > toIndex) {
+            throw new IllegalArgumentException();
+        }
+        if (fromIndex > (writeIndex + 1) || toIndex > (writeIndex + 1)) {
+            throw new IndexOutOfBoundsException();
+        }
+        ResizableArray sub = new ResizableArray((toIndex - fromIndex));
+        for (int i = fromIndex; i < toIndex; i++) {
+            sub.add(get(i));
+        }
+        return sub;
+    }
+}

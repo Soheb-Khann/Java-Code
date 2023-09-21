@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  *
  * @author Soheb Khan
  */
-public class DoublyLinkedList<Item> implements List<Item> {
+public class DoublyLinkedList<Item> implements List<Item>, Iterable<Item> {
     Node first = null;
     Node last = null;
 
@@ -39,7 +39,7 @@ public class DoublyLinkedList<Item> implements List<Item> {
      * @return
      */
     public boolean add(Item n) {
-        if (isEmtpy()) {
+        if (isEmpty()) {
             first = new Node(n);
             last = first;
             return false;
@@ -49,11 +49,12 @@ public class DoublyLinkedList<Item> implements List<Item> {
         return true;
     }
 
+    @Override
     /**
      * Adds the element at the first of the list
      */
     public void addFirst(Item n) {
-        if (isEmtpy()) {
+        if (isEmpty()) {
             first = new Node(n);
             last = first;
             return;
@@ -79,8 +80,7 @@ public class DoublyLinkedList<Item> implements List<Item> {
      * @throws IllegalArgumentException  if the given index is less than 0.
      */
     public void add(int index, Item n) {
-        if (index < 0)
-            throw new IllegalArgumentException();
+        if (index < 0) throw new IllegalArgumentException();
         Node dummyHead = new Node(null, null, first);
         Node prev = dummyHead;
         Node curr = first;
@@ -90,29 +90,34 @@ public class DoublyLinkedList<Item> implements List<Item> {
             curr = curr.next;
             i++;
         }
-        if (curr == null && i < index)
+        if (i < index)
             throw new IndexOutOfBoundsException(); // will allow 1 index out of bound if i < index - 1, also we can
-        // remove the curr == null condition
         prev.next = new Node(n, prev, curr);
         if (prev.next.next == null)
             last = prev.next;
         first = dummyHead.next;
     }
 
+
     @Override
     public boolean addAll(List<Item> i) {
-        return false;
+        if (i.isEmpty()) return true;
+        for (Item a : i) add(a);
+        return true;
     }
 
     @Override
     public boolean addAll(int index, List<Item> i) {
-        return false;
+        if (i.isEmpty()) return true;
+        for (Item a : i) add(index++, a);
+        return true;
     }
 
+    @Override
     /**
      * Returns true if the list is empty and false otherwise
      */
-    public boolean isEmtpy() {
+    public boolean isEmpty() {
         return first == null;
     }
 
@@ -122,12 +127,12 @@ public class DoublyLinkedList<Item> implements List<Item> {
      * @param index
      */
     public Item get(int index) {
-        if (isEmtpy() || index < 0)
-            throw new NoSuchElementException();
+        if (isEmpty() || index < 0) throw new NoSuchElementException();
         Node target = getTarget(index);
         return target.val;
     }
 
+    @Override
     /**
      * Returns the first element in the list
      */
@@ -135,6 +140,7 @@ public class DoublyLinkedList<Item> implements List<Item> {
         return first.val;
     }
 
+    @Override
     /**
      * Returns the first element in the list
      */
@@ -150,8 +156,7 @@ public class DoublyLinkedList<Item> implements List<Item> {
      * @return
      */
     public Item set(int index, Item n) {
-        if (index < 0 || isEmtpy())
-            throw new NoSuchElementException();
+        if (index < 0 || isEmpty()) throw new NoSuchElementException();
         Node target = getTarget(index);
         Item e = target.val;
         target.val = n;
@@ -169,8 +174,7 @@ public class DoublyLinkedList<Item> implements List<Item> {
     }
 
     public boolean remove(Item n) {
-        if (isEmtpy())
-            throw new NoSuchElementException();
+        if (isEmpty()) throw new NoSuchElementException();
         Node dummyHead = new Node(null, null, first);
         Node prev = dummyHead;
         Node curr = first;
@@ -185,13 +189,13 @@ public class DoublyLinkedList<Item> implements List<Item> {
         last = prev;
         last.next = null;
         first = dummyHead.next;
-        if (prev == dummyHead) first = last = null;
+        if (prev == dummyHead) first = last = null; // if the element is not found
         return true;
     }
 
     @Override
     public Item removeAtIndex(int index) {
-        if (isEmtpy() || index < 0) throw new IndexOutOfBoundsException();
+        if (isEmpty() || index < 0) throw new IndexOutOfBoundsException();
         Node target = getTarget(index);
         if (target.prev == null) {
             first = first.next;
@@ -207,7 +211,7 @@ public class DoublyLinkedList<Item> implements List<Item> {
 
     public Item removeAtIndexV2(int index) {
 
-        if (isEmtpy() || index < 0) throw new IndexOutOfBoundsException();
+        if (isEmpty() || index < 0) throw new IndexOutOfBoundsException();
         else if (index == 0) {
             first = first.next;
             first.prev = null;
@@ -221,23 +225,47 @@ public class DoublyLinkedList<Item> implements List<Item> {
         }
         if (i < index - 1 || prev.next == null) throw new IndexOutOfBoundsException();
         prev.next = prev.next.next;
-        prev.next.prev = prev;
+        if (prev.next == null) return null;
+        prev.next.prev = prev; // not working when prev is at the end of the list.
         return null;
     }
 
     @Override
     public boolean removeAll(List<Item> i) {
-        return false;
+        if (i.isEmpty() || isEmpty()) return true;
+        for (Item a : i) {
+            if (isEmpty()) return true;
+            remove(a);
+        }
+        return true;
     }
 
     @Override
-    public boolean retainAll(List<Item> i) {
-        return false;
+    public boolean retainAll(List<Item> i) { // not ready
+        if (i.isEmpty()) return true;
+        for (Item a : i) {
+            Node curr = first;
+            while (curr != null) {
+                if (curr.val == a) {
+
+                }
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean contains(Item item) {
-        if(first.val == item || last.val == item) return true;
+        if (isEmpty()) return false;
+        if (first.val == item || last.val == item) return true;
+        Node curr = first;
+        while (curr != null && curr.val != item) curr = curr.next;
+        if (curr == null) return false;
+        return true;
+    }
+
+    public boolean containsV2(Item item) { // Not ready
+        if (first.val == item || last.val == item) return true;
         Node curr = first;
         Node lcurr = last;
         while (curr != lcurr) {
@@ -253,24 +281,54 @@ public class DoublyLinkedList<Item> implements List<Item> {
 
     @Override
     public boolean containsAll(List<Item> i) {
-        return false;
+        if (i.isEmpty()) return true;
+        for (Item a : i) {
+            if (!contains(a)) return false;
+        }
+        return true;
     }
 
 
     @Override
     public int indexOf(Item item) {
-        return 0;
+        Node curr = first;
+        int i = 0;
+        while (curr != null && curr.val != item) {
+            curr = curr.next;
+            i++;
+        }
+        if (curr == null) return -1;
+        return i;
     }
 
     @Override
     public int lastIndexOf(Item item) {
-        return 0;
+        if (isEmpty()) return -1;
+        Node curr = first;
+        int i = 0;
+        int index = -1;
+        while (curr != null) {
+            if (curr.val == item) index = i;
+            curr = curr.next;
+            i++;
+        }
+        return index;
     }
 
 
     @Override
     public List<Item> sublist(int fromIndex, int toIndex) {
-        return null;
+        if (isEmpty()) return new DoublyLinkedList<Item>();
+        else if (fromIndex == toIndex || fromIndex < 0) throw new IllegalArgumentException();
+        List<Item> l = new DoublyLinkedList<>();
+        Node curr = getTarget(fromIndex);
+        int i = fromIndex;
+        while (curr != null && i < toIndex) {
+            l.add(curr.val);
+            i++;
+            curr = curr.next;
+        }
+        return l;
     }
 
 
@@ -289,6 +347,7 @@ public class DoublyLinkedList<Item> implements List<Item> {
         return size;
     }
 
+    @Override
     /**
      * Prints the list
      */
@@ -303,11 +362,11 @@ public class DoublyLinkedList<Item> implements List<Item> {
 
     @Override
     public Object[] toArray() {
-        Item [] arr = (Item[]) new Object[10];
+        Item[] arr = (Item[]) new Object[10];
         Node curr = first;
         int i = 0;
-        while (curr!= null){
-            if (i + 1 == arr.length)arr = Arrays.copyOf(arr,i*2);
+        while (curr != null) {
+            if (i + 1 == arr.length) arr = Arrays.copyOf(arr, i * 2);
             arr[i++] = curr.val;
             curr = curr.next;
         }
@@ -315,7 +374,7 @@ public class DoublyLinkedList<Item> implements List<Item> {
         return arr;
     }
 
-    public String  toString(){
+    public String toString() {
         if (isEmpty())
             return "";
         StringBuilder str = new StringBuilder(" ");
@@ -333,12 +392,21 @@ public class DoublyLinkedList<Item> implements List<Item> {
     }
 
     @Override
-    public boolean isEmpty() {
-        return first == null;
+    public Iterator<Item> iterator() {
+        return new DoublyLinkedListIterator();
     }
 
-    @Override
-    public Iterator<Item> iterator() {
-        return null;
+    private class DoublyLinkedListIterator implements Iterator<Item> {
+        Node curr = first;
+
+        public boolean hasNext() {
+            return curr != null;
+        }
+
+        public Item next() {
+            Item val = curr.val;
+            curr = curr.next;
+            return val;
+        }
     }
 }
